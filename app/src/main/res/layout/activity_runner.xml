@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:id="@+id/output_scrollview"
+        android:layout_above="@+id/input_layout">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:textColor="@android:color/white"
+            android:id="@+id/output"
+       />
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/quick_buttons"
+        android:id="@+id/input_layout"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/input_edittext"
+            android:imeOptions="flagNoExtractUi"
+            android:layout_weight="1"
+            android:maxLength="1"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="@string/label_input"
+            android:id="@+id/input_button"/>
+
+    </LinearLayout>
+
+
+
+    <TableLayout
+        android:id="@+id/quick_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:stretchColumns="*">
+
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/play_pause_button"
+                android:layout_column="0"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_pause_white"
+                android:background="@android:color/transparent"/>
+
+            <ImageButton
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:id="@+id/step_button"
+                android:src="@drawable/ic_arrow_right_white"
+                android:background="@android:color/transparent"
+                android:layout_column="1"/>
+
+            <ImageButton
+                android:id="@+id/restart_button"
+                android:layout_column="2"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_replay_white"
+                android:background="@android:color/transparent"/>
+
+            <ImageButton
+                android:id="@+id/dump_button"
+                android:layout_column="3"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_info_outline_white"
+                android:background="@android:color/transparent"/>
+
+            <ImageButton
+                android:id="@+id/breakpoint_button"
+                android:layout_column="4"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_error_outline_white"
+                android:background="@android:color/transparent"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/label_pause"
+                android:textAlignment="center"
+                android:id="@+id/play_pause_label"
+                android:layout_column="0"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/label_step"
+                android:textAlignment="center"
+                android:id="@+id/step_label"
+                android:layout_column="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/label_restart"
+                android:textAlignment="center"
+                android:id="@+id/restart_label"
+                android:layout_column="2"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/label_debug"
+                android:textAlignment="center"
+                android:id="@+id/debug_label"
+                android:layout_column="3"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/label_break"
+                android:textAlignment="center"
+                android:id="@+id/breakpoint_label"
+                android:layout_column="4"/>
+
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>

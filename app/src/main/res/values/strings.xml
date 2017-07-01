@@ -1,0 +1,127 @@
+<resources>
+    <string name="app_name">Brainfuck</string>
+
+    <string name="action_restore">Restore programs</string>
+    <string name="action_help">Help</string>
+
+    <string name="parcel_program">parcel_program</string>
+
+    <string name="prompt_input">Input: </string>
+
+    <string name="decrement"> &lt; </string>
+    <string name="increment"> &gt;</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+    <string name="print">.</string>
+    <string name="input">,</string>
+    <string name="start_loop">[</string>
+    <string name="end_loop">]</string>
+    <string name="space">" "</string>
+    <string name="backspace">⌫</string>
+    <string name="back">←</string>
+    <string name="forward">→</string>
+    <string name="up">↑</string>
+    <string name="down">↓</string>
+    <string name="enter">↩</string>
+    <string name="breakpoint">\\</string>
+
+    <string name="message_error">Error at position %1$d\nMessage: %2$s</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="title_editor">Editor</string>
+    <string name="title_editing">Editing %1$s</string>
+    <string name="title_runner">Runner</string>
+    <string name="title_running">Running %1$s</string>
+    <string name="title_exit_dialog">Confirm</string>
+    <string name="title_settings_run_dialog">Run</string>
+    <string name="title_settings_save_dialog">Save</string>
+
+    <string name="text_paused">Paused</string>
+    <string name="text_unpaused">Unpaused</string>
+
+    <string name="message_save_exit_dialog">Save before closing?</string>
+    <string name="message_exit_running_program_dialog">Stop running program?</string>
+    <string name="message_hit_breakpoint">Hit breakpoint</string>
+
+    <string name="label_breakpoint_ignore_button">Ignore</string>
+    <string name="label_breakpoint_break_button">Break</string>
+    <string name="label_input">Input</string>
+    <string name="label_pause">Pause</string>
+    <string name="label_step">Step</string>
+    <string name="label_break">Break</string>
+    <string name="label_debug">Debug</string>
+    <string name="label_restart">Restart</string>
+
+    <string name="error_no_program_name">Enter a name for the program</string>
+    <string name="error_min_memory_size">Memory size must be at least 1</string>
+    <string name="error_max_memory_size">Memory size must be less than 100000</string>
+    <string name="error_max_min">Max value must be larger than min</string>
+    <string name="error_min_max">Min value must be smaller than max</string>
+    <string name="error_loop_counts">The number of loop openings must be equal to the number of loop closings</string>
+    <string name="error_loop_mismatch">Mismatched loops</string>
+    <string name="error_input_a_character">Input a character</string>
+
+    <string name="program_name_hint">Program name</string>
+    <string name="program_description_hint">Program description</string>
+    <string name="program_output_suffix_hint">A string to add to output</string>
+    <string name="program_mem_size_hint">Memory size. Default 10000</string>
+    <string name="program_max_hint">Maximum value of values in memory</string>
+    <string name="program_min_hint">Minimum value of values in memory</string>
+
+    <string name="program_overflow_error_hint">Error on value overflow</string>
+    <string name="program_overflow_wrap_hint">Wrap on value overflow</string>
+    <string name="program_overflow_cap_hint">Cap on value overflow</string>
+    <string name="program_underflow_error_hint">Error on value underflow</string>
+    <string name="program_underflow_wrap_hint">Wrap on value underflow</string>
+    <string name="program_underflow_cap_hint">Cap on value underflow</string>
+
+    <string name="program_pointer_over_error_hint">Error on pointer overflow</string>
+    <string name="program_pointer_over_wrap_hint">Wrap pointer on overflow</string>
+    <string name="program_pointer_over_expand_hint">Expand on pointer overflow</string>
+    <string name="program_pointer_under_error_hint">Error on pointer underflow</string>
+    <string name="program_pointer_under_wrap_hint">Wrap pointer on underflow</string>
+
+    <string name="help_text">
+        <b>Brainfuck is a language consisting of only 8 characters</b>
+        \n\n
+        Memory is in the form of an array of integers
+        \n\n
+        Single characters can be input, and are then converted to their ASCII values
+        \n
+        Output values are converted back to characters using their ASCII values
+        \n
+        The only other piece of data is the pointer, which refers to the position in
+        the array
+        \n\n
+        The command characters are as follows
+        \n
+        <b>&gt;</b> Increment the pointer
+        \n
+        <b>&lt;</b> Decrement the pointer
+        \n
+        <b>+</b> Increment the value at the pointer position in the array
+        \n
+        <b>-</b> Decrement the value at the pointer position in the array
+        \n
+        <b>.</b> Output the value at the pointer position in the array
+        \n
+        <b>,</b> Accept an input character, and store it at the pointer position in the array
+        \n
+        <b>[</b> If the value at the pointer position in the array is zero, then move the pointer
+        forward to the position after the matching ] command
+        \n
+        <b>]</b> If the value at the pointer position in the array is nonzero, then move the pointer
+        to the matching ] command
+
+        \n\n
+        This app also includes a 9th character
+        \n
+        <b>\\</b> The backslash is used to pause the program, allowing it to be debugged
+
+    </string>
+
+
+</resources>

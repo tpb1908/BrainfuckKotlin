@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:id="@+id/toolbar">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/lock_keyboard_button"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_lock_open_white"
+                android:background="@android:color/transparent"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"/>
+
+            <ImageButton
+                android:id="@+id/save_button"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_save_white"
+                android:background="@android:color/transparent"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/quick_run_button"
+                />
+            <ImageButton
+                android:id="@+id/run_button"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:src="@drawable/ic_play_arrow_white"
+                android:background="@android:color/transparent"
+                android:layout_marginEnd="6dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"/>
+
+            <ImageButton
+                android:id="@+id/quick_run_button"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_fast_forward_white"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/run_button"/>
+
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inputType="textMultiLine"
+        android:maxHeight="400dp"
+        android:gravity="top"
+        android:id="@+id/editor"
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/quick_buttons"
+        android:layout_alignParentStart="true"
+        android:imeOptions="flagNoExtractUi"
+        />
+
+
+
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:stretchColumns="*"
+        android:id="@+id/quick_buttons"
+        android:layout_alignParentBottom="true">
+
+
+        <TableRow
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/decrement"
+                android:id="@+id/decrement_button"
+                android:layout_column="0"
+                android:onClick="editButtonPress"
+                />
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/increment"
+                android:id="@+id/increment_button"
+                android:layout_column="1"
+                android:onClick="editButtonPress"/>
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/plus"
+                android:id="@+id/plus_button"
+                android:layout_column="2"
+                android:onClick="editButtonPress"/>
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/minus"
+                android:id="@+id/minus_button"
+                android:layout_column="3"
+                android:onClick="editButtonPress"/>
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/print"
+                android:id="@+id/output_button"
+                android:layout_column="4"
+                android:onClick="editButtonPress"/>
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/input"
+                android:id="@+id/input"
+                android:layout_column="5"
+                android:onClick="editButtonPress"/>
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/start_loop"
+                android:id="@+id/start_loop_button"
+                android:layout_column="6"
+                android:onClick="editButtonPress"/>
+
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="0dp">
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/end_loop"
+                android:id="@+id/end_loop_button"
+                android:layout_column="0"
+                android:onClick="editButtonPress"/>
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/space"
+                android:id="@+id/space_button"
+                android:layout_column="1"
+                android:onClick="editButtonPress"/>
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/backspace"
+                android:id="@+id/backspace_button"
+                android:layout_column="2"
+                android:onClick="editButtonPress"/>
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/back"
+                android:id="@+id/backward_button"
+                android:layout_column="3"
+                android:onClick="editButtonPress"/>
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/forward"
+                android:id="@+id/forward_button"
+                android:layout_column="4"
+                android:onClick="editButtonPress"/>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/enter"
+                android:id="@+id/enter_button"
+                android:layout_column="5"
+                android:onClick="editButtonPress"/>
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/breakpoint"
+                android:id="@+id/breakpoint_button"
+                android:layout_column="6"
+                android:onClick="editButtonPress"/>
+
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>
