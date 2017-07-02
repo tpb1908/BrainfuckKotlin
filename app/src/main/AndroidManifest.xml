@@ -18,11 +18,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Editor">
+        <activity android:name=".Editor"
+                  android:windowSoftInputMode="stateHidden|adjustResize">
 
         </activity>
 
-        <activity android:name=".Runner">
+        <activity android:name=".Runner"
+                  android:windowSoftInputMode="stateHidden|adjustResize">
 
         </activity>
     </application>

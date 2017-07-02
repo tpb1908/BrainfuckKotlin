@@ -5,6 +5,7 @@
     <string name="action_help">Help</string>
 
     <string name="parcel_program">parcel_program</string>
+    <string name="extra_program_id">program_id</string>
 
     <string name="prompt_input">Input: </string>
 

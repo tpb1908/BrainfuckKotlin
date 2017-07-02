@@ -1,6 +1,7 @@
 package com.tpb.brainfuck
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.annotation.StringRes
@@ -8,50 +9,88 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.util.SparseIntArray
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.tpb.brainfuck.db.Program
 import kotlinx.android.synthetic.main.activity_runner.*
-import java.util.*
 
 /**
  * Created by theo on 01/07/17.
  */
-class Runner : AppCompatActivity(), InterpreterIO {
+class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
     lateinit var program: Program
     lateinit var interpreter: Interpreter
     lateinit var thread: Thread
 
 
+    companion object {
+
+        fun createIntent(context: Context, id: Long): Intent {
+            val intent = Intent(context, Runner::class.java)
+            intent.putExtra(context.getString(R.string.extra_program_id), id)
+            return intent
+        }
+
+        fun createIntent(context: Context, program: Program): Intent {
+            val intent = Intent(context, Runner::class.java)
+            intent.putExtra(context.getString(R.string.parcel_program), program)
+            return intent
+        }
+
+        fun isValidIntent(context: Context, intent: Intent?): Boolean {
+            return intent != null && (
+                            intent.extras.containsKey(context.getString(R.string.extra_program_id))
+                                    ||
+                            intent.extras.containsKey(context.getString(R.string.parcel_program))
+                    )
+        }
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (intent.extras == null || !intent.extras.containsKey(getString(R.string.parcel_program))) {
+        setContentView(R.layout.activity_runner)
+        if (!isValidIntent(this, intent)) {
             finish()
-        } else {
+        } else if (intent.extras.containsKey(getString((R.string.parcel_program)))){
             program = intent.extras.getParcelable(getString(R.string.parcel_program))
             interpreter = Interpreter(this, program, true)
             thread = Thread(interpreter)
-            if(program.name.isBlank()) {
-                setTitle(R.string.title_runner)
-            } else {
-                title = String.format(getString(R.string.title_running), program.name)
-                supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-                supportActionBar!!.setDisplayShowHomeEnabled(true)
-            }
+            setTitle()
             addListeners()
+        } else if (intent.extras.containsKey(getString(R.string.extra_program_id))) {
+            val id = intent.getLongExtra(getString(R.string.extra_program_id), -1)
+            kotlin.concurrent.thread {
+                program = Application.db.programDao().getProgram(id)
+                runOnUiThread { setTitle(); addListeners() }
+            }
+        }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+    }
+
+    private fun setTitle() {
+        if(program.name.isBlank()) {
+            setTitle(R.string.title_runner)
+        } else {
+            title = String.format(getString(R.string.title_running), program.name)
+
         }
     }
 
-    fun startProgram() {
-        play()
+    private fun startProgram() {
+        Log.i("Start", "Starting program")
         thread.start()
+        output.postDelayed({
+            runOnUiThread { play() }
+        }, 50)
         output.addSimpleTextChangedListener {
             output_scrollview.post { output_scrollview.fullScroll(View.FOCUS_DOWN) }
         }
     }
 
-    fun addListeners() {
+    private fun addListeners() {
         play_pause_button.setOnClickListener {
             if (thread.isAlive) {
                 togglePause()
@@ -66,7 +105,7 @@ class Runner : AppCompatActivity(), InterpreterIO {
         }
 
         restart_button.setOnClickListener {
-            thread.interrupt()
+            interpreter.stop()
             thread = Thread(Interpreter(this, program))
             startProgram()
             output.text = ""
@@ -106,7 +145,7 @@ class Runner : AppCompatActivity(), InterpreterIO {
     }
 
     override fun error(pos: Int, error: String) {
-        thread.interrupt()
+        interpreter.stop()
         runOnUiThread {
             val message = SpannableString(String.format(getString(R.string.message_error, pos, error)))
             message.setSpan(ForegroundColorSpan(Color.RED), 0, message.length, 0)
@@ -151,8 +190,9 @@ class Runner : AppCompatActivity(), InterpreterIO {
         play_pause_button.setImageResource(R.drawable.ic_play_arrow_white)
         play_pause_label.setText(R.string.label_play)
         val sp = SpannableString(getString(R.string.text_paused))
-        sp.setSpan(ForegroundColorSpan(Color.YELLOW), 1, sp.length-1, 0)
+        sp.setSpan(ForegroundColorSpan(Color.YELLOW), 0, sp.length, 0)
         output.append(sp)
+        output.append("\n")
     }
 
     fun play() {
@@ -160,8 +200,9 @@ class Runner : AppCompatActivity(), InterpreterIO {
         play_pause_button.setImageResource(R.drawable.ic_pause_white)
         play_pause_label.setText(R.string.label_pause)
         val sp = SpannableString(getString(R.string.text_unpaused))
-        sp.setSpan(ForegroundColorSpan(Color.GREEN), 1, sp.length-1, 0)
+        sp.setSpan(ForegroundColorSpan(Color.GREEN), 0, sp.length, 0)
         output.append(sp)
+        output.append("\n")
     }
 
     override fun onBackPressed() {
@@ -179,137 +220,8 @@ class Runner : AppCompatActivity(), InterpreterIO {
 
     override fun finish() {
         (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(currentFocus?.windowToken, 0)
-        thread.interrupt()
+        Log.i("Runner", "Interrupting thread")
+        interpreter.stop()
         super.finish()
     }
-}
-
-class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
-
-    constructor(io: InterpreterIO, program: Program, useBreakPoints: Boolean) : this(io, program) {
-        shouldUseBreakpoints = useBreakPoints
-    }
-
-    val mem: Array<Int> = Array(program.memoryCapacity, { 0 })
-    var pos: Int = 0
-    var pointer: Int = 0
-    var waitingForInput: Boolean = false
-    var paused: Boolean = true
-    var loopPositions: SparseIntArray = SparseIntArray()
-    var shouldUseBreakpoints = false
-
-    override fun run() {
-        pos = 0
-        pointer = 0
-        waitingForInput = false
-        paused = true
-
-        if(checkProgram()) {
-            while(!Thread.currentThread().isInterrupted && pos < program.source.length) {
-                if(paused || waitingForInput) {
-                    try {
-                        Thread.sleep(50)
-                    } catch (exc : InterruptedException) {}
-                } else {
-                    step()
-                }
-            }
-        }
-    }
-
-    fun checkProgram() : Boolean {
-        val loopStarts = program.source.occurrencesOf('[')
-        val loopEnds = program.source.occurrencesOf(']')
-        if (loopStarts != loopEnds) {
-            io.error(-1, R.string.error_loop_counts)
-            return false
-        }
-        return findLoopPositions()
-    }
-
-    fun findLoopPositions(): Boolean {
-        loopPositions.clear()
-        val openings = Stack<Int>()
-        for (i in 0..program.source.length) {
-            if(program.source[i] == '[') {
-                openings.push(i)
-            } else if (program.source[i] == ']') {
-                if(openings.isEmpty()) {
-                    io.error(i, R.string.error_loop_mismatch)
-                    return false
-                } else {
-                    loopPositions.put(openings.peek(), i)
-                    loopPositions.put(i, openings.pop())
-                }
-            }
-        }
-
-        return true
-    }
-
-    fun input(input: Char) {
-        if(waitingForInput) {
-            mem[pointer] = input.toInt()
-            waitingForInput = false
-        }
-    }
-
-    fun step() {
-        when (program.source[pos]) {
-            '>' -> {
-                pointer++
-                if(pointer >= mem.size) {
-                }
-            }
-            '<' -> {
-                pointer--
-            }
-            '+' -> {
-                mem[pointer]++
-            }
-            '-' -> {
-                mem[pointer]--
-            }
-            '.' -> {
-                io.output(mem[pointer].toChar().toString())
-            }
-            ',' -> {
-                waitingForInput = true
-                io.getInput()
-            }
-            '[' -> {
-                if (mem[pointer] == 0) {
-                    pos = loopPositions.get(pos)
-                }
-            }
-            ']' -> {
-                if (mem[pointer] != 0) {
-                    pos = loopPositions.get(pos)
-                }
-            }
-            '\\' -> {
-                if (shouldUseBreakpoints) {
-                    paused = true
-                    io.breakpoint()
-                }
-            }
-        }
-        pos++
-    }
-
-}
-
-interface InterpreterIO {
-
-    fun output(out: String)
-
-    fun error(pos: Int, error: String)
-
-    fun error(pos: Int, @StringRes error: Int)
-
-    fun breakpoint()
-
-    fun getInput()
-
-
 }

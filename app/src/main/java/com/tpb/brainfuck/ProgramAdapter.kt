@@ -14,7 +14,7 @@ import java.util.*
 /**
  * Created by theo on 30/06/17.
  */
-class ProgramAdapter(dao: ProgramDao) : RecyclerView.Adapter<ProgramAdapter.ProgramHolder>() {
+class ProgramAdapter(dao: ProgramDao, val handler: ProgramTouchHandler) : RecyclerView.Adapter<ProgramAdapter.ProgramHolder>() {
 
     var programs: MutableList<Program> = ArrayList()
     var recycler: RecyclerView? = null
@@ -51,6 +51,9 @@ class ProgramAdapter(dao: ProgramDao) : RecyclerView.Adapter<ProgramAdapter.Prog
         val prog = programs.get(position)
         holder.title.text = prog.name
         holder.description.text = prog.description
+        holder.itemView.setOnClickListener { handler.open(prog) }
+        holder.runButton.setOnClickListener { handler.run(prog) }
+
     }
 
     override fun getItemCount(): Int {
@@ -60,17 +63,18 @@ class ProgramAdapter(dao: ProgramDao) : RecyclerView.Adapter<ProgramAdapter.Prog
     class ProgramHolder(view: View) : RecyclerView.ViewHolder(view) {
         val title = view.text_title
         val description = view.text_description
+        val runButton = view.quick_run
     }
 
+    interface ProgramTouchHandler {
+
+        fun run(program: Program)
+
+        fun open(program: Program)
+
+        fun remove(program: Program)
+
+    }
 
 }
 
-interface ProgramTouchHandler {
-
-    fun run()
-
-    fun open()
-
-    fun remove()
-
-}

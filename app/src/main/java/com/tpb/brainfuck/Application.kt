@@ -2,8 +2,11 @@ package com.tpb.brainfuck
 
 import android.app.Application
 import android.arch.persistence.room.Room
+import android.content.Context
 import com.tpb.brainfuck.db.Database
+import com.tpb.brainfuck.db.Program
 import com.tpb.brainfuck.db.ProgramMigrations
+import kotlin.concurrent.thread
 
 /**
  * Created by theo on 01/07/17.
@@ -17,5 +20,85 @@ class Application : Application() {
     override fun onCreate() {
         super.onCreate()
         db = Room.databaseBuilder(this, Database::class.java, "bfdb").addMigrations(ProgramMigrations.Migration_1_2).build()
+        val sp = getSharedPreferences(applicationContext.packageName, Context.MODE_PRIVATE)
+        if(sp.getBoolean("firstRun", true)) {
+            sp.edit().putBoolean("firstRun", false).apply()
+            initDefaultPrograms()
+        }
+    }
+
+    private fun initDefaultPrograms() {
+        thread {
+            db.programDao().insert(Program(
+                    name = "Hello world",
+                    description = "Prints \"Hello world\"",
+                    source = "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.",
+                    memoryCapacity = 8))
+            db.programDao().insert(Program(
+                    name = "QWERTY to DVORAK",
+                    description = "Converts QWERTY keycodes to DVORAK",
+                    source = "+>>>>>>>++[+<[>]>[<++>-]<]<[[>+>+<<-]>>-]>+++++[>+++++++<-]>[[<<+>>-]<<-]\n" +
+                            "++++++[>++++++++++<-]>+<<<<<<<<<<++++++<<<<<<<+++++[<<+++>+>-]<++\n" +
+                            "<[<<<<<<<+++++>>+++++>+>+++>>+++++>>+++++<-]<<<+<<--->--[[<<+>>-]<<-]>---<<<<-\n" +
+                            "<++++[<<<<++>->+++++++>+>-]<<[<<+>+>>+>>+>>++>>+<<<<<<<-]<[>+<-]<<-\n" +
+                            ">[[<<+>>-]<<-]<<<<++++++++++++[<<+>---->-]<<[[<<+>>-]<<-]+++[>---------<-]\n" +
+                            "<<<<<<<<<<<<<<<<<+<++++[<<++++>>-]<<[<<<--->>>>->>-->>>>>>---<<<<<<<<<-]<<<--<<[\n" +
+                            "    >>+>+++++++++++[<--->>>>---->>--->>--<<<<<<<-]>>>>>+>>+++\n" +
+                            "    >>>+++++++[<->>---->>->>--<<<<<-]>+>>---->>>>+++++>>---->>-->\n" +
+                            "    ++++++[>--------<-]>+>>---->>+++>>------------>>>>++>>+++++++++>>-->>------\n" +
+                            "    >>---->>++>>+>+++++++[<++>>-<-]>>>+>>>+++++++[<+>>+++>>>>>>++++<<<<<<<-]>+\n" +
+                            "    >>>>>>>>\n" +
+                            "]>[<+>-]>[>>]<,[[[<<+>>-]<<-]>.[>>]<,]",
+                    memoryCapacity = 520))
+            db.programDao().insert(Program(
+                    name = "Factorial",
+                    description = "Outputs arbitrarily many factorials",
+                    source = ">++++++++++>>>+>+[>>>+[-[<<<<<[+<<<<<]>>[[-]>[<<+>+>-]<[>+<-]<[>+<-[>+<-[>\n" +
+                            "+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>+<-[>[-]>>>>+>+<<<<<<-[>+<-]]]]]]]]]]]>[<+>-\n" +
+                            "]+>>>>>]<<<<<[<<<<<]>>>>>>>[>>>>>]++[-<<<<<]>>>>>>-]+>>>>>]<[>++<-]<<<<[<[\n" +
+                            ">+<-]<<<<]>>[->[-]++++++[<++++++++>-]>>>>]<<<<<[<[>+>+<<-]>.<<<<<]>.>>>>]"))
+            db.programDao().insert(Program(
+                    name = "Squares",
+                    description = "Outputs the squares of 0 to 100",
+                    source = "++++[>+++++<-]>[<+++++>-]+<+[\n" +
+                            "    >[>+>+<<-]++>>[<<+>>-]>>>[-]++>[-]+\n" +
+                            "    >>>+[[-]++++++>>>]<<<[[<++++++++<++>>-]+<.<[>----<-]<]\n" +
+                            "    <<[>>>>>[>>>[-]+++++++++<[>-<-]+++++++++>[-[<->-]+[<<<]]<[>+<-]>]<<-]<<-\n" +
+                            "]",
+                    memoryCapacity = 32))
+            db.programDao().insert(Program(
+                    name = "ROT 13",
+                    description = "Shift characters by 13 places",
+                    source = "-,+[                         \n" +
+                            "    -[                       \n" +
+                            "        >>++++[>++++++++<-]  \n" +
+                            "                             \n" +
+                            "        <+<-[                \n" +
+                            "            >+>+>-[>>>]      \n" +
+                            "            <[[>+<-]>>+>]    \n" +
+                            "            <<<<<-           \n" +
+                            "        ]                    \n" +
+                            "    ]>>>[-]+                 \n" +
+                            "    >--[-[<->[-]]]<[         \n" +
+                            "        ++++++++++++<[       \n" +
+                            "                             \n" +
+                            "            >-[>+>>]         \n" +
+                            "            >[+[<+>-]>+>>]   \n" +
+                            "            <<<<<-           \n" +
+                            "        ]                    \n" +
+                            "        >>[<+>-]             \n" +
+                            "        >[                   \n" +
+                            "            -[               \n" +
+                            "                -<<[-]>>     \n" +
+                            "            ]<<[<<->>-]>>    \n" +
+                            "        ]<<[<<+>>-]          \n" +
+                            "    ]                        \n" +
+                            "    <[-]                     \n" +
+                            "    <.[-]                    \n" +
+                            "    <-,+                     \n" +
+                            "]",
+                    minVal = -1E6.toInt(),
+                    outSuffix = "\n"))
+        }
     }
 }

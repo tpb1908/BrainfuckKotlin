@@ -63,7 +63,7 @@
                 android:layout_column="0"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:src="@drawable/ic_pause_white"
+                android:src="@drawable/ic_play_arrow_white"
                 android:background="@android:color/transparent"/>
 
             <ImageButton
@@ -107,7 +107,7 @@
 
             <TextView
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/label_pause"
+                android:text="@string/label_play"
                 android:textAlignment="center"
                 android:id="@+id/play_pause_label"
                 android:layout_column="0"/>

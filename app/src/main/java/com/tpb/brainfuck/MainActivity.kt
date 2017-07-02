@@ -5,9 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.tpb.brainfuck.db.Program
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.concurrent.thread
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ProgramAdapter.ProgramTouchHandler {
 
     lateinit var adapter: ProgramAdapter
 
@@ -17,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         val dao = Application.db.programDao()
 
-        adapter = ProgramAdapter(dao)
+        adapter = ProgramAdapter(dao, this)
 
         program_recycler.adapter = adapter
         program_recycler.layoutManager = LinearLayoutManager(this)
@@ -25,12 +24,7 @@ class MainActivity : AppCompatActivity() {
 
 
         fab.setOnClickListener {
-            thread {
-                val p = Program(name = "test program" + System.currentTimeMillis())
-                dao.insert(p)
-            }
             startActivity(Editor.createIntent(this))
-
         }
 
 //        thread {
@@ -44,4 +38,14 @@ class MainActivity : AppCompatActivity() {
 //        }
     }
 
+    override fun run(program: Program) {
+        startActivity(Runner.createIntent(this, program))
+    }
+
+    override fun open(program: Program) {
+        startActivity(Editor.createIntent(this, program.uid))
+    }
+
+    override fun remove(program: Program) {
+    }
 }
