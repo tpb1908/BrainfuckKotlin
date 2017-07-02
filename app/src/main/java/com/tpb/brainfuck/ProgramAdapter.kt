@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.tpb.brainfuck.db.Program
+import com.tpb.brainfuck.db.ProgramDao
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.program_card.view.*
 import java.util.*

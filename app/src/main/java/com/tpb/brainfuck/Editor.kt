@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.view.inputmethod.InputMethodManager
+import com.tpb.brainfuck.db.Program
+import com.tpb.brainfuck.db.ProgramDao
 import kotlinx.android.synthetic.main.activity_editor.*
 import kotlin.concurrent.thread
 

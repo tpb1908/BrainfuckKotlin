@@ -3,7 +3,9 @@ package com.tpb.brainfuck
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import com.tpb.brainfuck.db.Program
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,10 +25,10 @@ class MainActivity : AppCompatActivity() {
 
 
         fab.setOnClickListener {
-//            thread {
-//                val p = Program(name = "test program" + System.currentTimeMillis())
-//                dao.insert(p)
-//            }
+            thread {
+                val p = Program(name = "test program" + System.currentTimeMillis())
+                dao.insert(p)
+            }
             startActivity(Editor.createIntent(this))
 
         }

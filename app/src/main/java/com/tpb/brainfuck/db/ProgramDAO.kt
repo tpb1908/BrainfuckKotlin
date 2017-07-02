@@ -1,24 +1,11 @@
-package com.tpb.brainfuck
+package com.tpb.brainfuck.db
 
 import android.arch.persistence.room.*
-import io.mironov.smuggler.AutoParcelable
 import io.reactivex.Flowable
 
 /**
- * Created by theo on 30/06/17.
+ * Created by theo on 02/07/17.
  */
-@Entity data class Program (
-        @PrimaryKey(autoGenerate = true) var uid: Long = 0,
-        var name: String = "",
-        var description: String = "",
-        var source: String = "",
-        var outSuffix: String = "",
-        var memoryCapacity: Int = 10000,
-        var minVal: Int = Int.MIN_VALUE,
-        var maxVal: Int = Int.MAX_VALUE
-
-
-) : AutoParcelable
 
 @Dao interface ProgramDao {
 
@@ -39,5 +26,7 @@ import io.reactivex.Flowable
 
     @Query("DELETE FROM program")
     fun deleteAllPrograms()
+
+
 
 }
