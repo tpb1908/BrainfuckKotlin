@@ -49,6 +49,7 @@
     <string name="label_breakpoint_ignore_button">Ignore</string>
     <string name="label_breakpoint_break_button">Break</string>
     <string name="label_input">Input</string>
+    <string name="label_play">Play</string>
     <string name="label_pause">Pause</string>
     <string name="label_step">Step</string>
     <string name="label_break">Break</string>

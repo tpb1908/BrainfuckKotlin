@@ -25,6 +25,9 @@ import io.reactivex.Flowable
     @Query("SELECT * FROM program")
     fun getAllPrograms(): Flowable<List<Program>>
 
+    @Query("SELECT * FROM program WHERE uid = :arg0 LIMIT 1")
+    fun getProgram(id: Long): Program
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(program: Program): Long
 

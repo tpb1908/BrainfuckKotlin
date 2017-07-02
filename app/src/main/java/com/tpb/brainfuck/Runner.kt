@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.util.SparseIntArray
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import kotlinx.android.synthetic.main.activity_runner.*
 import java.util.*
@@ -29,7 +30,7 @@ class Runner : AppCompatActivity(), InterpreterIO {
         } else {
             program = intent.extras.getParcelable(getString(R.string.parcel_program))
             interpreter = Interpreter(this, program, true)
-
+            thread = Thread(interpreter)
             if(program.name.isBlank()) {
                 setTitle(R.string.title_runner)
             } else {
@@ -41,9 +42,22 @@ class Runner : AppCompatActivity(), InterpreterIO {
         }
     }
 
+    fun startProgram() {
+        play()
+        thread.start()
+        output.addSimpleTextChangedListener {
+            output_scrollview.post { output_scrollview.fullScroll(View.FOCUS_DOWN) }
+        }
+    }
+
     fun addListeners() {
         play_pause_button.setOnClickListener {
-            togglePause()
+            if (thread.isAlive) {
+                togglePause()
+            } else {
+                startProgram()
+            }
+
         }
 
         step_button.setOnClickListener {
@@ -52,6 +66,8 @@ class Runner : AppCompatActivity(), InterpreterIO {
 
         restart_button.setOnClickListener {
             thread.interrupt()
+            thread = Thread(Interpreter(this, program))
+            startProgram()
             output.text = ""
         }
 
@@ -132,7 +148,7 @@ class Runner : AppCompatActivity(), InterpreterIO {
     fun pause() {
         interpreter.paused = true
         play_pause_button.setImageResource(R.drawable.ic_play_arrow_white)
-        play_pause_label.setText(R.string.label_play_button)
+        play_pause_label.setText(R.string.label_play)
         val sp = SpannableString(getString(R.string.text_paused))
         sp.setSpan(ForegroundColorSpan(Color.YELLOW), 1, sp.length-1, 0)
         output.append(sp)
@@ -141,7 +157,7 @@ class Runner : AppCompatActivity(), InterpreterIO {
     fun play() {
         interpreter.paused = false
         play_pause_button.setImageResource(R.drawable.ic_pause_white)
-        play_pause_label.setText(R.string.label_pause_button)
+        play_pause_label.setText(R.string.label_pause)
         val sp = SpannableString(getString(R.string.text_unpaused))
         sp.setSpan(ForegroundColorSpan(Color.GREEN), 1, sp.length-1, 0)
         output.append(sp)

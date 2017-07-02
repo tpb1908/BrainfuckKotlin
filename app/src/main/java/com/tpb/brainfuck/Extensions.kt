@@ -4,7 +4,7 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.EditText
+import android.widget.TextView
 
 /**
  * Created by theo on 01/07/17.
@@ -23,7 +23,7 @@ fun RecyclerView.bindFloatingActionButtion(fab: FloatingActionButton) {
     })
 }
 
-fun EditText.addSimpleTextChangedListener(listener: (e : Editable) -> Unit) {
+fun TextView.addSimpleTextChangedListener(listener: (e : Editable) -> Unit) {
     this.addTextChangedListener(object: TextWatcher {
         override fun afterTextChanged(p0: Editable) {
             listener(p0)
