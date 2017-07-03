@@ -1,7 +1,6 @@
 package com.tpb.brainfuck
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +27,6 @@ class ProgramAdapter(dao: ProgramDao, val handler: ProgramTouchHandler) : Recycl
             } else if (programs.size - it.size == 1) {
                 val pos = programs.indexOf(programs.minus(it).first())
                 programs.removeAt(pos)
-                Log.i("Remove", "Notifying remove at " + pos)
                 notifyItemRemoved(pos)
             } else {
                 programs = it.reversed().toMutableList()

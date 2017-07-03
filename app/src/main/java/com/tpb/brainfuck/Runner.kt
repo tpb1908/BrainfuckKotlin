@@ -11,7 +11,6 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.tpb.brainfuck.db.Program
@@ -138,6 +137,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
                 output.append(inChar + "\n")
                 interpreter.input(inChar)
                 input_edittext.setText(null)
+                input_layout.visibility = View.GONE
             } else {
                 input_edittext.error = getString(R.string.error_input_a_character)
             }
@@ -174,12 +174,15 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
     }
 
     @UiThread override fun getInput() {
-        val prompt = SpannableString(getString(R.string.prompt_input))
-        prompt.setSpan(ForegroundColorSpan(Color.GREEN), 0, prompt.length, 0)
-        output.append(prompt)
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.toggleSoftInputFromWindow(input_edittext.applicationWindowToken, InputMethodManager.SHOW_FORCED, 0)
-        input_edittext.requestFocus()
+        runOnUiThread {
+            val prompt = SpannableString(getString(R.string.prompt_input))
+            prompt.setSpan(ForegroundColorSpan(Color.GREEN), 0, prompt.length, 0)
+            output.append(prompt)
+            input_layout.visibility = View.VISIBLE
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.toggleSoftInputFromWindow(input_edittext.applicationWindowToken, InputMethodManager.SHOW_FORCED, 0)
+            input_edittext.requestFocus()
+        }
     }
 
     @UiThread override fun complete() {
@@ -243,7 +246,6 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
 
     override fun finish() {
         (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(currentFocus?.windowToken, 0)
-        Log.i("Runner", "Interrupting thread")
         interpreter.stop()
         super.finish()
     }

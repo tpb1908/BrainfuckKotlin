@@ -10,13 +10,14 @@
         android:background="@android:color/black"
         android:id="@+id/output_scrollview"
         android:layout_above="@+id/input_layout">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/black"
             android:textColor="@android:color/white"
-            android:id="@+id/output"
-       />
+            android:id="@+id/output"/>
+
     </ScrollView>
 
     <LinearLayout
@@ -24,7 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/quick_buttons"
         android:id="@+id/input_layout"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:animateLayoutChanges="true">
 
         <EditText
             android:layout_width="350dp"
@@ -42,8 +45,6 @@
             android:id="@+id/input_button"/>
 
     </LinearLayout>
-
-
 
     <TableLayout
         android:id="@+id/quick_buttons"
