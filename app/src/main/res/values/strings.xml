@@ -6,6 +6,7 @@
 
     <string name="parcel_program">parcel_program</string>
     <string name="extra_program_id">program_id</string>
+    <string name="extra_start_immediately">start_immediately</string>
 
     <string name="prompt_input">Input: </string>
 
@@ -25,6 +26,8 @@
     <string name="down">↓</string>
     <string name="enter">↩</string>
     <string name="breakpoint">\\</string>
+
+    <string name="transition_background">background</string>
 
     <string name="message_error">Error at position %1$d\nMessage: %2$s</string>
 

@@ -18,6 +18,9 @@ import io.reactivex.Flowable
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(program: Program): Long
 
+    @Insert()
+    fun insertAll(vararg program: Program)
+
     @Update
     fun update(program: Program): Int
 

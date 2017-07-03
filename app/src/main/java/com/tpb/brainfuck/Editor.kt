@@ -1,10 +1,13 @@
 package com.tpb.brainfuck
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.tpb.brainfuck.db.Program
 import com.tpb.brainfuck.db.ProgramDao
@@ -104,6 +107,10 @@ class Editor : AppCompatActivity() {
             val intent = Intent(context, Editor::class.java)
             intent.putExtra(context.getString(R.string.parcel_program), id)
             return intent
+        }
+
+        fun createTransition(activity: Activity, view: View): Bundle {
+            return ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, activity.getString(R.string.transition_background)).toBundle()
         }
 
     }

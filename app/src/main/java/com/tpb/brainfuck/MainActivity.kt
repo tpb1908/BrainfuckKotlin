@@ -3,6 +3,7 @@ package com.tpb.brainfuck
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import com.tpb.brainfuck.db.Program
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -24,7 +25,7 @@ class MainActivity : AppCompatActivity(), ProgramAdapter.ProgramTouchHandler {
 
 
         fab.setOnClickListener {
-            startActivity(Editor.createIntent(this))
+            startActivity(Editor.createIntent(this), Editor.createTransition(this, fab))
         }
 
 //        thread {
@@ -39,11 +40,11 @@ class MainActivity : AppCompatActivity(), ProgramAdapter.ProgramTouchHandler {
     }
 
     override fun run(program: Program) {
-        startActivity(Runner.createIntent(this, program))
+        startActivity(Runner.createIntent(this, program, true))
     }
 
-    override fun open(program: Program) {
-        startActivity(Editor.createIntent(this, program.uid))
+    override fun open(program: Program, view: View) {
+        startActivity(Editor.createIntent(this, program.uid), Editor.createTransition(this, view))
     }
 
     override fun remove(program: Program) {

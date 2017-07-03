@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.support.annotation.StringRes
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -26,15 +27,17 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
 
     companion object {
 
-        fun createIntent(context: Context, id: Long): Intent {
+        fun createIntent(context: Context, id: Long, startImmediately: Boolean = false): Intent {
             val intent = Intent(context, Runner::class.java)
             intent.putExtra(context.getString(R.string.extra_program_id), id)
+            intent.putExtra(context.getString(R.string.extra_start_immediately), startImmediately)
             return intent
         }
 
-        fun createIntent(context: Context, program: Program): Intent {
+        fun createIntent(context: Context, program: Program, startImmediately: Boolean = false): Intent {
             val intent = Intent(context, Runner::class.java)
             intent.putExtra(context.getString(R.string.parcel_program), program)
+            intent.putExtra(context.getString(R.string.extra_start_immediately), startImmediately)
             return intent
         }
 
@@ -58,12 +61,12 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
             interpreter = Interpreter(this, program, true)
             thread = Thread(interpreter)
             setTitle()
-            addListeners()
+            setup()
         } else if (intent.extras.containsKey(getString(R.string.extra_program_id))) {
             val id = intent.getLongExtra(getString(R.string.extra_program_id), -1)
             kotlin.concurrent.thread {
                 program = Application.db.programDao().getProgram(id)
-                runOnUiThread { setTitle(); addListeners() }
+                runOnUiThread { setTitle(); setup() }
             }
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -80,17 +83,14 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
     }
 
     private fun startProgram() {
-        Log.i("Start", "Starting program")
         thread.start()
-        output.postDelayed({
-            runOnUiThread { play() }
-        }, 50)
+        play()
         output.addSimpleTextChangedListener {
             output_scrollview.post { output_scrollview.fullScroll(View.FOCUS_DOWN) }
         }
     }
 
-    private fun addListeners() {
+    private fun setup() {
         play_pause_button.setOnClickListener {
             if (thread.isAlive) {
                 togglePause()
@@ -101,26 +101,28 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         }
 
         step_button.setOnClickListener {
-            if (interpreter.pos < program.source.length) interpreter.step()
+            interpreter.performStep()
         }
 
         restart_button.setOnClickListener {
             interpreter.stop()
-            thread = Thread(Interpreter(this, program))
+            interpreter = Interpreter(this, program)
+            thread = Thread(interpreter)
             startProgram()
             output.text = ""
         }
 
         dump_button.setOnClickListener {
-
+            output.append("\n")
+            output.append(interpreter.getMemoryDump())
         }
 
         breakpoint_button.setOnClickListener {
-            if (interpreter.shouldUseBreakpoints) {
-                interpreter.shouldUseBreakpoints = false
+            if (interpreter.isUsingBreakpoints()) {
+                interpreter.setUsingBreakpoints(false)
                 breakpoint_label.setText(R.string.label_breakpoint_break_button)
             } else {
-                interpreter.shouldUseBreakpoints = true
+                interpreter.setUsingBreakpoints(true)
                 breakpoint_label.setText(R.string.label_breakpoint_ignore_button)
             }
         }
@@ -136,6 +138,10 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
             } else {
                 input_edittext.error = getString(R.string.error_input_a_character)
             }
+        }
+
+        if (intent?.extras?.getBoolean(getString(R.string.extra_start_immediately), false) ?: false) {
+            Handler().postDelayed( { startProgram() }, 60)
         }
 
     }
@@ -178,7 +184,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
     }
 
     fun togglePause() {
-        if (interpreter.paused) {
+        if (interpreter.isPaused()) {
             play()
         } else {
            pause()
@@ -186,7 +192,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
     }
 
     fun pause() {
-        interpreter.paused = true
+        interpreter.setPaused(true)
         play_pause_button.setImageResource(R.drawable.ic_play_arrow_white)
         play_pause_label.setText(R.string.label_play)
         val sp = SpannableString(getString(R.string.text_paused))
@@ -196,7 +202,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
     }
 
     fun play() {
-        interpreter.paused = false
+        interpreter.setPaused(false)
         play_pause_button.setImageResource(R.drawable.ic_pause_white)
         play_pause_label.setText(R.string.label_pause)
         val sp = SpannableString(getString(R.string.text_unpaused))

@@ -1,9 +1,9 @@
 package com.tpb.brainfuck
 
 import android.support.annotation.StringRes
-import android.util.Log
 import android.util.SparseIntArray
 import com.tpb.brainfuck.db.Program
+import java.lang.StringBuilder
 import java.util.*
 
 /**
@@ -15,22 +15,19 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
         shouldUseBreakpoints = useBreakPoints
     }
 
-    val mem: Array<Int> = Array(program.memoryCapacity, { 0 })
-    var pos: Int = 0
-    var pointer: Int = 0
-    var waitingForInput: Boolean = false
-    var paused: Boolean = true
-    var loopPositions: SparseIntArray = SparseIntArray()
-    var shouldUseBreakpoints = false
-    @Volatile var stopRequested = false
+    private val mem: Array<Int> = Array(program.memoryCapacity, { 0 })
+    private var pos: Int = 0
+    private var pointer: Int = 0
+    private var waitingForInput: Boolean = false
+    private var paused: Boolean = true
+    private var loopPositions: SparseIntArray = SparseIntArray()
+    private var shouldUseBreakpoints = false
+    @Volatile private var stopRequested = false
 
     override fun run() {
-        Log.i("Interpreter", "Running " + paused)
         if(checkProgram()) {
             while(pos < program.source.length) {
-                Log.i("Interpreter", "Interrupted? " + stopRequested)
                 if (stopRequested) return
-
                 if (paused || waitingForInput) {
                     try {
                         Thread.sleep(100)
@@ -44,6 +41,22 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
 
     fun stop() {
         stopRequested = true
+    }
+
+    fun isPaused(): Boolean {
+        return paused
+    }
+
+    fun setPaused(isPaused: Boolean) {
+        paused = isPaused
+    }
+
+    fun isUsingBreakpoints(): Boolean {
+        return shouldUseBreakpoints
+    }
+
+    fun setUsingBreakpoints(useBreakPoints: Boolean) {
+        shouldUseBreakpoints = useBreakPoints
     }
 
     fun checkProgram() : Boolean {
@@ -83,7 +96,11 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
         }
     }
 
-    fun step() {
+    fun performStep() {
+        if (pos < program.source.length) step()
+    }
+
+    private fun step() {
         when (program.source[pos]) {
             '>' -> {
                 pointer++
@@ -125,6 +142,32 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
         }
         pos++
     }
+
+    fun getMemoryDump(): String {
+        val builder = StringBuilder()
+        var lastUsedPosition = 0
+        builder.append('[')
+        for (i in 0 until mem.size) {
+            if (mem[i] != 0 || i == mem.size - 1) {
+                if (lastUsedPosition < i - 1) {
+                    builder.append(lastUsedPosition)
+                    builder.append("-")
+                    builder.append(i - 1)
+                    builder.append(" : ")
+                    builder.append(0)
+                } else {
+                    builder.append(i)
+                    builder.append(" : ")
+                    builder.append(mem[i])
+                }
+                builder.append(", ")
+                lastUsedPosition = i + 1
+            }
+        }
+        builder.setCharAt(builder.length - 1, ']')
+        return builder.toString()
+    }
+
 
     interface InterpreterIO {
 

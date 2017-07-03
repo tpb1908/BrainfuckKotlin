@@ -9,9 +9,11 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:id="@+id/toolbar">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageButton
                 android:id="@+id/lock_keyboard_button"
                 android:layout_width="56dp"
@@ -50,6 +52,7 @@
                 android:layout_toStartOf="@+id/run_button"/>
 
         </RelativeLayout>
+
     </android.support.v7.widget.Toolbar>
 
 
@@ -64,11 +67,7 @@
         android:layout_below="@+id/toolbar"
         android:layout_above="@+id/quick_buttons"
         android:layout_alignParentStart="true"
-        android:imeOptions="flagNoExtractUi"
-        />
-
-
-
+        android:imeOptions="flagNoExtractUi"/>
 
 
     <TableLayout

@@ -51,7 +51,7 @@ class ProgramAdapter(dao: ProgramDao, val handler: ProgramTouchHandler) : Recycl
         val prog = programs.get(position)
         holder.title.text = prog.name
         holder.description.text = prog.description
-        holder.itemView.setOnClickListener { handler.open(prog) }
+        holder.itemView.setOnClickListener { handler.open(prog, holder.itemView) }
         holder.runButton.setOnClickListener { handler.run(prog) }
 
     }
@@ -70,7 +70,7 @@ class ProgramAdapter(dao: ProgramDao, val handler: ProgramTouchHandler) : Recycl
 
         fun run(program: Program)
 
-        fun open(program: Program)
+        fun open(program: Program, view: View)
 
         fun remove(program: Program)
 
