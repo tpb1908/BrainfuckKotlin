@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/settings_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/settings_header"
         android:orientation="vertical"
         android:paddingBottom="@dimen/dialog_title_vertical_margin"
         android:paddingLeft="@dimen/dialog_title_horizontal_margin"
@@ -28,235 +27,232 @@
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/settings_scroller"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:id="@+id/settings_scroller">
+        android:layout_weight="1">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp">
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp">
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/name_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/name_wrapper"
                 android:hint="@string/program_name_hint">
 
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/name_input"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/name_input"/>
+                    android:layout_height="wrap_content"/>
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/program_description_hint"
                 android:id="@+id/desc_wrapper"
-                android:layout_below="@+id/name_wrapper">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name_wrapper"
+                android:hint="@string/program_description_hint">
 
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/desc_input"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/desc_input"/>
+                    android:layout_height="wrap_content"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/program_output_suffix_hint"
                 android:id="@+id/output_suffix_wrapper"
-                android:layout_below="@id/desc_wrapper">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/desc_wrapper"
+                android:hint="@string/program_output_suffix_hint">
 
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/output_suffix_input"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/output_suffix_input"/>
+                    android:layout_height="wrap_content"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/size_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/output_suffix_wrapper">
+
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/size_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="numberSigned"
+                    android:layout_gravity="center_horizontal"
                     android:ems="10"
-                    android:id="@+id/size_input"
                     android:hint="@string/program_mem_size_hint"
-                    android:layout_gravity="center_horizontal"/>
+                    android:inputType="numberSigned"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/max_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/max_wrapper"
                 android:layout_below="@id/size_wrapper">
 
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/max_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="numberSigned"
+                    android:layout_gravity="center_horizontal"
                     android:ems="10"
-                    android:id="@+id/max_input"
                     android:hint="@string/program_max_hint"
-                    android:layout_gravity="center_horizontal"/>
+                    android:inputType="numberSigned"/>
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/min_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/min_wrapper"
                 android:layout_below="@+id/max_wrapper">
+
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/min_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="numberSigned"
+                    android:layout_gravity="center_horizontal"
                     android:ems="10"
-                    android:id="@+id/min_input"
                     android:hint="@string/program_min_hint"
-                    android:layout_gravity="center_horizontal"/>
+                    android:inputType="numberSigned"/>
             </android.support.design.widget.TextInputLayout>
 
             <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/pointer_overflow_behaviour"
-                android:layout_marginTop="16dp"
-                android:layout_below="@+id/min_wrapper">
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/program_pointer_over_error_hint"
-                    android:id="@+id/pointer_over_error_checkbox"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/program_pointer_over_wrap_hint"
-                    android:id="@+id/pointer_over_wrap_checkbox"/>
-
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/program_pointer_over_expand_hint"
-                    android:id="@+id/pointer_over_expand_checkbox"/>
-
-            </RadioGroup>
-
-            <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/pointer_underflow_behaviour"
-                android:layout_marginTop="16dp"
-                android:layout_below="@+id/pointer_overflow_behaviour">
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/program_pointer_under_error_hint"
-                    android:id="@+id/pointer_under_error_checkbox"
-
-                    />
+                android:layout_below="@+id/min_wrapper"
+                android:layout_marginTop="16dp">
 
                 <RadioButton
+                    android:id="@+id/pointer_over_error_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/program_pointer_under_wrap_hint"
-                    android:id="@+id/pointer_under_wrap_checkbox"/>
+                    android:text="@string/program_pointer_over_error_hint"/>
+
+                <RadioButton
+                    android:id="@+id/pointer_over_wrap_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/program_pointer_over_wrap_hint"/>
+
+                <RadioButton
+                    android:id="@+id/pointer_over_expand_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/program_pointer_over_expand_hint"/>
 
             </RadioGroup>
 
             <RadioGroup
+                android:id="@+id/pointer_underflow_behaviour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pointer_overflow_behaviour"
+                android:layout_marginTop="16dp">
+
+                <RadioButton
+                    android:id="@+id/pointer_under_error_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/program_pointer_under_error_hint"/>
+
+                <RadioButton
+                    android:id="@+id/pointer_under_wrap_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/program_pointer_under_wrap_hint"/>
+
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/value_overflow_behaviour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/value_overflow_behaviour"
                 android:layout_below="@id/pointer_underflow_behaviour"
                 android:layout_marginTop="16dp">
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/program_overflow_error_hint"
-                    android:id="@+id/value_over_error_checkbox"/>
 
                 <RadioButton
+                    android:id="@+id/value_over_error_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/program_overflow_wrap_hint"
-                    android:id="@+id/value_over_wrap_checkbox"/>
+                    android:text="@string/program_overflow_error_hint"/>
 
                 <RadioButton
+                    android:id="@+id/value_over_wrap_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/program_overflow_cap_hint"
-                    android:id="@+id/value_over_cap_checkbox"/>
+                    android:text="@string/program_overflow_wrap_hint"/>
+
+                <RadioButton
+                    android:id="@+id/value_over_cap_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/program_overflow_cap_hint"/>
             </RadioGroup>
 
             <RadioGroup
+                android:id="@+id/value_underflow_behaviour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/value_underflow_behaviour"
                 android:layout_below="@+id/value_overflow_behaviour"
-                android:layout_marginTop="16dp"
-                >
+                android:layout_marginTop="16dp">
+
                 <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/program_underflow_error_hint"
                     android:id="@+id/value_under_error_checkbox"
-                    />
-
-                <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/program_underflow_wrap_hint"
-                    android:id="@+id/value_under_wrap_checkbox"/>
+                    android:text="@string/program_underflow_error_hint"/>
 
                 <RadioButton
+                    android:id="@+id/value_under_wrap_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/program_underflow_cap_hint"
-                    android:id="@+id/value_under_cap_checkbox"/>
+                    android:text="@string/program_underflow_wrap_hint"/>
+
+                <RadioButton
+                    android:id="@+id/value_under_cap_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/program_underflow_cap_hint"/>
             </RadioGroup>
+
         </RelativeLayout>
+
     </ScrollView>
 
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/dividerVertical" />
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/button_cancel"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:textColor="@color/colorAccent"
             android:text="@android:string/cancel"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/button_ok"/>
+            android:textColor="@color/colorAccent"/>
 
         <Button
             android:id="@+id/button_ok"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:textColor="@color/colorAccent"
             android:text="@android:string/ok"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"/>
-    </RelativeLayout>
+            android:textColor="@color/colorAccent"/>
+
+    </LinearLayout>
 
 </LinearLayout>
