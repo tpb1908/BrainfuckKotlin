@@ -7,6 +7,7 @@
     <string name="parcel_program">parcel_program</string>
     <string name="extra_program_id">program_id</string>
     <string name="extra_start_immediately">start_immediately</string>
+    <string name="extra_config_type">config_dialog_type</string>
 
     <string name="prompt_input">Input: </string>
 

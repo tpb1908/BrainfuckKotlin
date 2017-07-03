@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.view.View
@@ -58,7 +59,7 @@ class Editor : AppCompatActivity() {
         }
 
         lock_keyboard_button.setOnClickListener { v ->
-            isKeyBoardLocked.not()
+            isKeyBoardLocked = !isKeyBoardLocked
             if (isKeyBoardLocked) {
                 lock_keyboard_button.setImageResource(R.drawable.ic_lock_outline_white)
                 (v.context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.hideSoftInputFromWindow(v.windowToken, 0)
@@ -72,11 +73,20 @@ class Editor : AppCompatActivity() {
         }
 
         quick_run_button.setOnClickListener {
-
+            program.source = editor.text.toString()
+            startActivity(Runner.createIntent(this, program, true))
         }
 
         save_button.setOnClickListener {
+            ConfigDialog.Builder(program)
+                    .setType(ConfigDialog.ConfigDialogType.SAVE)
+                    .setListener(object: ConfigDialog.ConfigDialogListener {
+                override fun onPositiveClick(dialog: DialogFragment, launchType: ConfigDialog.ConfigDialogType, program: Program) {
+                }
 
+                override fun onNegativeClick(dialog: DialogFragment, launchType: ConfigDialog.ConfigDialogType) {
+                }
+            }).build().show(supportFragmentManager, this::class.java.simpleName)
         }
 
         increment_button.setOnClickListener { dispatchKeyEvent(KeyEvent(0, ">", 0, 0)) }

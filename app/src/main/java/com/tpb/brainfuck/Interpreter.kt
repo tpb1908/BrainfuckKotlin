@@ -21,7 +21,7 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
     private var waitingForInput: Boolean = false
     private var paused: Boolean = true
     private var loopPositions: SparseIntArray = SparseIntArray()
-    private var shouldUseBreakpoints = false
+    private var shouldUseBreakpoints = true
     @Volatile private var stopRequested = false
     var complete = false
 
@@ -155,20 +155,21 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
             if (mem[i] != 0 || i == mem.size - 1) {
                 if (lastUsedPosition < i - 1) {
                     builder.append(lastUsedPosition)
-                    builder.append("-")
-                    builder.append(i - 1)
-                    builder.append(" : ")
-                    builder.append(0)
+                            .append("-")
+                            .append(i - 1)
+                            .append(" : ")
+                            .append(0)
                 } else {
                     builder.append(i)
-                    builder.append(" : ")
-                    builder.append(mem[i])
+                            .append(" : ")
+                            .append(mem[i])
                 }
                 builder.append(", ")
                 lastUsedPosition = i + 1
             }
         }
-        builder.setCharAt(builder.length - 1, ']')
+        builder.setLength(builder.length - 2)
+        builder.append(']')
         return builder.toString()
     }
 

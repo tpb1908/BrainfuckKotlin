@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity(), ProgramAdapter.ProgramTouchHandler {
 
         program_recycler.adapter = adapter
         program_recycler.layoutManager = LinearLayoutManager(this)
-        program_recycler.bindFloatingActionButtion(fab)
+        program_recycler.bindFloatingActionButton(fab)
 
 
         fab.setOnClickListener {

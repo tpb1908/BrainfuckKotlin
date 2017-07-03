@@ -115,8 +115,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         }
 
         dump_button.setOnClickListener {
-            output.append("\n")
-            output.append(interpreter.getMemoryDump())
+            outputMessage(interpreter.getMemoryDump())
         }
 
         breakpoint_button.setOnClickListener {
@@ -153,12 +152,28 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         runOnUiThread { output.append(out + program.outSuffix) }
     }
 
+    private fun outputMessage(message: String) {
+        runOnUiThread {
+            output.append("\n")
+            output.append(message)
+            output.append("\n")
+        }
+    }
+
+    private fun outputMessage(message: SpannableString) {
+        runOnUiThread {
+            output.append("\n")
+            output.append(message)
+            output.append("\n")
+        }
+    }
+
     override fun error(pos: Int, error: String) {
         interpreter.stop()
         runOnUiThread {
             val message = SpannableString(String.format(getString(R.string.message_error, pos, error)))
             message.setSpan(ForegroundColorSpan(Color.RED), 0, message.length, 0)
-            output.append(message)
+            outputMessage(message)
         }
     }
 
@@ -170,14 +185,14 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         pause()
         val message = SpannableString(getString(R.string.message_hit_breakpoint))
         message.setSpan(ForegroundColorSpan(Color.YELLOW), 0, message.length, 0)
-        output.append(message)
+        outputMessage(message)
     }
 
     @UiThread override fun getInput() {
         runOnUiThread {
             val prompt = SpannableString(getString(R.string.prompt_input))
             prompt.setSpan(ForegroundColorSpan(Color.GREEN), 0, prompt.length, 0)
-            output.append(prompt)
+            outputMessage(prompt)
             input_layout.visibility = View.VISIBLE
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.toggleSoftInputFromWindow(input_edittext.applicationWindowToken, InputMethodManager.SHOW_FORCED, 0)
@@ -203,8 +218,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         setPausedUi()
         val sp = SpannableString(getString(R.string.text_paused))
         sp.setSpan(ForegroundColorSpan(Color.YELLOW), 0, sp.length, 0)
-        output.append(sp)
-        output.append("\n")
+        outputMessage(sp)
     }
 
 
@@ -220,8 +234,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         setPlayingUi()
         val sp = SpannableString(getString(R.string.text_unpaused))
         sp.setSpan(ForegroundColorSpan(Color.GREEN), 0, sp.length, 0)
-        output.append(sp)
-        output.append("\n")
+        outputMessage(sp)
     }
 
     @UiThread private fun setPlayingUi() {
