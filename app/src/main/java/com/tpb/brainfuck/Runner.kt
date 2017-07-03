@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.support.annotation.StringRes
+import android.support.annotation.UiThread
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.SpannableString
@@ -84,7 +85,8 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
 
     private fun startProgram() {
         thread.start()
-        play()
+        interpreter.setPaused(false)
+        setPlayingUi()
         output.addSimpleTextChangedListener {
             output_scrollview.post { output_scrollview.fullScroll(View.FOCUS_DOWN) }
         }
@@ -94,10 +96,11 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         play_pause_button.setOnClickListener {
             if (thread.isAlive) {
                 togglePause()
+            } else if (interpreter.complete) {
+                restart_button.callOnClick()
             } else {
                 startProgram()
             }
-
         }
 
         step_button.setOnClickListener {
@@ -163,24 +166,25 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         error(pos, getString(error))
     }
 
-    override fun breakpoint() {
-        runOnUiThread {
-            pause()
-            val message = SpannableString(getString(R.string.message_hit_breakpoint))
-            message.setSpan(ForegroundColorSpan(Color.YELLOW), 0, message.length, 0)
-            output.append(message)
-        }
+    @UiThread override fun breakpoint() {
+        pause()
+        val message = SpannableString(getString(R.string.message_hit_breakpoint))
+        message.setSpan(ForegroundColorSpan(Color.YELLOW), 0, message.length, 0)
+        output.append(message)
     }
 
-    override fun getInput() {
-        runOnUiThread {
-            val prompt = SpannableString(getString(R.string.prompt_input))
-            prompt.setSpan(ForegroundColorSpan(Color.GREEN), 0, prompt.length, 0)
-            output.append(prompt)
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.toggleSoftInputFromWindow(input_edittext.applicationWindowToken, InputMethodManager.SHOW_FORCED, 0)
-            input_edittext.requestFocus()
-        }
+    @UiThread override fun getInput() {
+        val prompt = SpannableString(getString(R.string.prompt_input))
+        prompt.setSpan(ForegroundColorSpan(Color.GREEN), 0, prompt.length, 0)
+        output.append(prompt)
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInputFromWindow(input_edittext.applicationWindowToken, InputMethodManager.SHOW_FORCED, 0)
+        input_edittext.requestFocus()
+    }
+
+    @UiThread override fun complete() {
+        interpreter.setPaused(true)
+        setPausedUi()
     }
 
     fun togglePause() {
@@ -191,24 +195,37 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         }
     }
 
-    fun pause() {
+    private fun pause() {
         interpreter.setPaused(true)
-        play_pause_button.setImageResource(R.drawable.ic_play_arrow_white)
-        play_pause_label.setText(R.string.label_play)
+        setPausedUi()
         val sp = SpannableString(getString(R.string.text_paused))
         sp.setSpan(ForegroundColorSpan(Color.YELLOW), 0, sp.length, 0)
         output.append(sp)
         output.append("\n")
     }
 
-    fun play() {
+
+    @UiThread private fun setPausedUi() {
+        runOnUiThread {
+            play_pause_button.setImageResource(R.drawable.ic_play_arrow_white)
+            play_pause_label.setText(R.string.label_play)
+        }
+    }
+
+    private fun play() {
         interpreter.setPaused(false)
-        play_pause_button.setImageResource(R.drawable.ic_pause_white)
-        play_pause_label.setText(R.string.label_pause)
+        setPlayingUi()
         val sp = SpannableString(getString(R.string.text_unpaused))
         sp.setSpan(ForegroundColorSpan(Color.GREEN), 0, sp.length, 0)
         output.append(sp)
         output.append("\n")
+    }
+
+    @UiThread private fun setPlayingUi() {
+        runOnUiThread {
+            play_pause_button.setImageResource(R.drawable.ic_pause_white)
+            play_pause_label.setText(R.string.label_pause)
+        }
     }
 
     override fun onBackPressed() {

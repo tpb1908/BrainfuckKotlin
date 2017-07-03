@@ -23,6 +23,8 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
     private var loopPositions: SparseIntArray = SparseIntArray()
     private var shouldUseBreakpoints = false
     @Volatile private var stopRequested = false
+    var complete = false
+
 
     override fun run() {
         if(checkProgram()) {
@@ -36,6 +38,8 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
                     step()
                 }
             }
+            complete = true
+            io.complete()
         }
     }
 
@@ -181,6 +185,7 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
 
         fun getInput()
 
+        fun complete()
 
     }
 
