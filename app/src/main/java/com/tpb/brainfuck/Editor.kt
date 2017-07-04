@@ -118,7 +118,8 @@ class Editor : AppCompatActivity(), ConfigDialog.ConfigDialogListener {
     override fun onPositiveClick(dialog: DialogFragment, launchType: ConfigDialog.ConfigDialogType, program: Program) {
         this.program = program
         if (launchType == ConfigDialog.ConfigDialogType.RUN) {
-            quick_run_button.callOnClick()
+            program.source = editor.text.toString()
+            startActivity(Runner.createIntent(this, program, false))
         } else if (launchType == ConfigDialog.ConfigDialogType.SAVE) {
             thread {
                 if (program.uid == 0L) {
@@ -134,11 +135,6 @@ class Editor : AppCompatActivity(), ConfigDialog.ConfigDialogListener {
     override fun onNegativeClick(dialog: DialogFragment, launchType: ConfigDialog.ConfigDialogType) {
     }
 
-    private fun save() {
-        thread {
-
-        }
-    }
 
     companion object {
 

@@ -144,7 +144,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/label_break"
+                android:text="@string/label_breakpoint_ignore_button"
                 android:textAlignment="center"
                 android:id="@+id/breakpoint_label"
                 android:layout_column="4"/>

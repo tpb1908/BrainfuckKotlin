@@ -152,17 +152,17 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
         val b = StringBuilder("[")
         var last = 0
         var lastDiffPos = 0
-        mem.forEachIndexed { index, i ->
-            if (index == mem.size - 1 || mem[index + 1] != i) {
-                if (i != last) {
-                    b.append(index)
+        mem.forEachIndexed { i, value ->
+            if (i == mem.size - 1 || mem[i + 1] != value) {
+                if (value != last || i == 0) {
+                    b.append(i)
                 } else {
-                    b.append(lastDiffPos).append("..").append(index)
+                    b.append(lastDiffPos).append("..").append(i)
                 }
-                b.append(" = ").append(i).append(", ")
-                lastDiffPos = index + 1
+                b.append(" = ").append(value).append(", ")
+                lastDiffPos = i + 1
             }
-            last = i
+            last = value
         }
         b.setLength(b.length - 2)
         return b.append("]").toString()
