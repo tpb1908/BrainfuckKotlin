@@ -19,7 +19,9 @@ class Application : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        db = Room.databaseBuilder(this, Database::class.java, "bfdb").addMigrations(ProgramMigrations.Migration_1_2).build()
+        db = Room.databaseBuilder(this, Database::class.java, "bfdb")
+                .addMigrations(ProgramMigrations.Migration_1_2, ProgramMigrations.Migration_2_3)
+                .build()
         val sp = getSharedPreferences(applicationContext.packageName, Context.MODE_PRIVATE)
         if (sp.getBoolean("firstRun", true)) {
             sp.edit().putBoolean("firstRun", false).apply()

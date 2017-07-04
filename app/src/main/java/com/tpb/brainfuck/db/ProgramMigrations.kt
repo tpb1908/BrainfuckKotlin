@@ -15,6 +15,12 @@ class ProgramMigrations {
                 database.execSQL("ALTER TABLE program ADD valueUnderflowBehaviour VARCHAR, valueOverflowBehaviour VARCHAR, pointerUnderflowBehaviour VARCHAR, pointerOverflowBehaviour VARCHAR;")
             }
         }
+
+        val Migration_2_3 = object: Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE program ADD input VARCHAR;")
+            }
+        }
     }
 
 }

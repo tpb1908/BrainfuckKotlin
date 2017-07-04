@@ -26,7 +26,7 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
     private var shouldUseBreakpoints = true
     @Volatile private var stopRequested = false
     var complete = false
-
+    private var inStream = ArrayList<Int>()
 
     override fun run() {
         if (checkProgram()) {
@@ -44,26 +44,6 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
             complete = true
             io.complete()
         }
-    }
-
-    fun stop() {
-        stopRequested = true
-    }
-
-    fun isPaused(): Boolean {
-        return paused
-    }
-
-    fun setPaused(isPaused: Boolean) {
-        paused = isPaused
-    }
-
-    fun isUsingBreakpoints(): Boolean {
-        return shouldUseBreakpoints
-    }
-
-    fun setUsingBreakpoints(useBreakPoints: Boolean) {
-        shouldUseBreakpoints = useBreakPoints
     }
 
     private fun checkProgram(): Boolean {
@@ -94,6 +74,30 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
         }
 
         return true
+    }
+
+    fun setInput(input: ArrayList<Int>) {
+        inStream = input
+    }
+
+    fun stop() {
+        stopRequested = true
+    }
+
+    fun isPaused(): Boolean {
+        return paused
+    }
+
+    fun setPaused(isPaused: Boolean) {
+        paused = isPaused
+    }
+
+    fun isUsingBreakpoints(): Boolean {
+        return shouldUseBreakpoints
+    }
+
+    fun setUsingBreakpoints(useBreakPoints: Boolean) {
+        shouldUseBreakpoints = useBreakPoints
     }
 
     fun input(input: Char) {
@@ -127,8 +131,13 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
                 io.output(mem[pointer].toChar().toString())
             }
             ',' -> {
-                waitingForInput = true
-                io.getInput()
+                if (inStream.isNotEmpty()) {
+                    mem[pointer] = inStream.last()
+                    inStream.remove(inStream.size)
+                } else {
+                    waitingForInput = true
+                    io.getInput()
+                }
             }
             '[' -> {
                 if (mem[pointer] == 0) {

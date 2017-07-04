@@ -18,7 +18,8 @@ import io.mironov.smuggler.AutoParcelable
         var valueUnderflowBehaviour: ValueUnderflowBehaviour = ValueUnderflowBehaviour.ERROR,
         var valueOverflowBehaviour: ValueOverflowBehaviour = ValueOverflowBehaviour.ERROR,
         var pointerUnderflowBehaviour: PointerUnderflowBehaviour = PointerUnderflowBehaviour.ERROR,
-        var pointerOverflowBehaviour: PointerOverflowBehaviour = PointerOverflowBehaviour.ERROR
+        var pointerOverflowBehaviour: PointerOverflowBehaviour = PointerOverflowBehaviour.ERROR,
+        var input: String = ""
 
 
 ) : AutoParcelable
