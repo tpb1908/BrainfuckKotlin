@@ -18,7 +18,7 @@ import kotlin.concurrent.thread
 /**
  * Created by theo on 01/07/17.
  */
-class Editor : AppCompatActivity() {
+class Editor : AppCompatActivity(), ConfigDialog.ConfigDialogListener {
 
     var isKeyBoardLocked: Boolean = false
     var hasProgramChanged: Boolean = false
@@ -68,25 +68,29 @@ class Editor : AppCompatActivity() {
             }
         }
 
-        run_button.setOnClickListener {
-
-        }
 
         quick_run_button.setOnClickListener {
             program.source = editor.text.toString()
             startActivity(Runner.createIntent(this, program, true))
         }
 
+
         save_button.setOnClickListener {
+            program.source = editor.text.toString()
             ConfigDialog.Builder(program)
                     .setType(ConfigDialog.ConfigDialogType.SAVE)
-                    .setListener(object: ConfigDialog.ConfigDialogListener {
-                override fun onPositiveClick(dialog: DialogFragment, launchType: ConfigDialog.ConfigDialogType, program: Program) {
-                }
+                    .setListener(this)
+                    .build()
+                    .show(supportFragmentManager, this::class.java.simpleName)
+        }
 
-                override fun onNegativeClick(dialog: DialogFragment, launchType: ConfigDialog.ConfigDialogType) {
-                }
-            }).build().show(supportFragmentManager, this::class.java.simpleName)
+        run_button.setOnClickListener {
+            program.source = editor.text.toString()
+            ConfigDialog.Builder(program)
+                    .setType(ConfigDialog.ConfigDialogType.RUN)
+                    .setListener(this)
+                    .build()
+                    .show(supportFragmentManager, this::class.java.simpleName)
         }
 
         increment_button.setOnClickListener { dispatchKeyEvent(KeyEvent(0, ">", 0, 0)) }
@@ -109,6 +113,31 @@ class Editor : AppCompatActivity() {
     private fun insertChar(keyCode: Int) {
         editor.dispatchKeyEvent(KeyEvent(0, 0, KeyEvent.ACTION_DOWN, keyCode, 0))
         editor.dispatchKeyEvent(KeyEvent(0, 0, KeyEvent.ACTION_UP, keyCode, 0))
+    }
+
+    override fun onPositiveClick(dialog: DialogFragment, launchType: ConfigDialog.ConfigDialogType, program: Program) {
+        this.program = program
+        if (launchType == ConfigDialog.ConfigDialogType.RUN) {
+            quick_run_button.callOnClick()
+        } else if (launchType == ConfigDialog.ConfigDialogType.SAVE) {
+            thread {
+                if (program.uid == 0L) {
+                    program.uid = dao.insert(program)
+                } else {
+                    dao.update(program)
+                }
+            }
+        }
+
+    }
+
+    override fun onNegativeClick(dialog: DialogFragment, launchType: ConfigDialog.ConfigDialogType) {
+    }
+
+    private fun save() {
+        thread {
+
+        }
     }
 
     companion object {

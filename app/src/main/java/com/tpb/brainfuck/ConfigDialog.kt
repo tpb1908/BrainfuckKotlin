@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.*
 import com.tpb.brainfuck.db.*
+import java.lang.Exception
 
 /**
  * Created by theo on 03/07/17.
@@ -109,7 +110,7 @@ class ConfigDialog : DialogFragment() {
             val sizeInput = view.findViewById<EditText>(R.id.size_input)
             val sizeWrapper = view.findViewById<TextInputLayout>(R.id.size_wrapper)
             if (sizeInput.text.isNotEmpty()) {
-                capacity = Integer.parseInt(sizeInput.text.toString())
+                capacity = parseInt(sizeInput.text.toString(), capacity)
                 if (capacity < 1) {
                     error = true
                     sizeWrapper.error = getString(R.string.error_min_memory_size)
@@ -120,15 +121,15 @@ class ConfigDialog : DialogFragment() {
                     sizeWrapper.error = null
                 }
             }
-            var maxVal = 10000
+            var maxVal = Integer.MAX_VALUE
             val maxInput = view.findViewById<EditText>(R.id.max_input)
             if (maxInput.text.isNotEmpty()) {
-                maxVal = Integer.parseInt(maxInput.text.toString())
+                maxVal = parseInt(maxInput.text.toString(), maxVal)
             }
-            var minVal = 0
+            var minVal = Integer.MIN_VALUE
             val minInput = view.findViewById<EditText>(R.id.min_input)
             if (minInput.text.isNotEmpty()) {
-                minVal = Integer.parseInt(minInput.text.toString())
+                minVal = parseInt(minInput.text.toString(), minVal)
             }
             if (minVal > maxVal) {
                 error = true
@@ -154,6 +155,14 @@ class ConfigDialog : DialogFragment() {
         view.findViewById<Button>(R.id.button_cancel).setOnClickListener {
             listener?.onNegativeClick(this, type)
             dialog?.cancel()
+        }
+    }
+
+    private fun parseInt(string: String, default: Int): Int {
+        try {
+            return Integer.parseInt(string)
+        } catch (e: Exception) {
+            return default
         }
     }
 
