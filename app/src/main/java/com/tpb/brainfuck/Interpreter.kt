@@ -26,7 +26,8 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
     private var shouldUseBreakpoints = true
     @Volatile private var stopRequested = false
     var complete = false
-    private var inStream = Stack<Int>()
+    var inStream = Stack<Int>()
+        private set
 
     override fun run() {
         if (checkProgram()) {

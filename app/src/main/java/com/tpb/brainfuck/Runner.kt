@@ -56,7 +56,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         setContentView(R.layout.activity_runner)
         if (!isValidIntent(this, intent)) {
             finish()
-        } else if (intent.extras.containsKey(getString((R.string.parcel_program)))){
+        } else if (intent.extras.containsKey(getString((R.string.parcel_program)))) {
             program = intent.extras.getParcelable(getString(R.string.parcel_program))
             interpreter = Interpreter(this, program, true)
             thread = Thread(interpreter)
@@ -116,7 +116,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
 
         dump_button.setOnClickListener {
             outputMessage(String.format(getString(R.string.program_debug_format,
-                    interpreter.pos, interpreter.pointer, interpreter.getMemoryDump())))
+                    interpreter.pos, interpreter.pointer, interpreter.inStream.toString(), interpreter.getMemoryDump())))
         }
 
         breakpoint_button.setOnClickListener {

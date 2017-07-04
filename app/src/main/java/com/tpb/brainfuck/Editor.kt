@@ -1,14 +1,11 @@
 package com.tpb.brainfuck
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.tpb.brainfuck.db.Program
 import com.tpb.brainfuck.db.ProgramDao
@@ -120,13 +117,12 @@ class Editor : AppCompatActivity(), ConfigDialog.ConfigDialogListener {
         if (launchType == ConfigDialog.ConfigDialogType.RUN) {
             program.source = editor.text.toString()
             startActivity(Runner.createIntent(this, program, false))
-        } else if (launchType == ConfigDialog.ConfigDialogType.SAVE) {
-            thread {
-                if (program.uid == 0L) {
-                    program.uid = dao.insert(program)
-                } else {
-                    dao.update(program)
-                }
+        }
+        thread {
+            if (program.uid == 0L) {
+                program.uid = dao.insert(program)
+            } else {
+                dao.update(program)
             }
         }
 

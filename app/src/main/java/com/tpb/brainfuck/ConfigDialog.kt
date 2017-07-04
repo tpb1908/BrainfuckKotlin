@@ -125,7 +125,7 @@ class ConfigDialog : DialogFragment() {
                 if (capacity < 1) {
                     error = true
                     sizeWrapper.error = getString(R.string.error_min_memory_size)
-                } else if (capacity > 10000) {
+                } else if (capacity > 100000) {
                     error = true
                     sizeWrapper.error = getString(R.string.error_max_memory_size)
                 } else {

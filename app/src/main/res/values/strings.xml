@@ -83,7 +83,7 @@
     <string name="program_pointer_under_error_hint">Error on pointer underflow</string>
     <string name="program_pointer_under_wrap_hint">Wrap pointer on underflow</string>
 
-    <string name="program_debug_format">Program position: %1$d\nPointer position: %2$d\nMemory: %3$s</string>
+    <string name="program_debug_format">Program position: %1$d\nPointer position: %2$d\nInput: %3$s\nMemory: %4$s</string>
 
 
     <string name="help_text">
