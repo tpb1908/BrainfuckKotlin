@@ -160,7 +160,6 @@ class ConfigDialog : DialogFragment() {
                 program.description = view.findViewById<EditText>(R.id.desc_input).text.toString()
                 program.outSuffix = view.findViewById<EditText>(R.id.output_suffix_input).text.toString()
                 program.input = inputString
-                info("Program being returned is " + program)
                 listener?.onPositiveClick(this, type, program)
                 dialog?.dismiss()
             }

@@ -113,7 +113,6 @@ class Editor : AppCompatActivity(), ConfigDialog.ConfigDialogListener {
     }
 
     override fun onPositiveClick(dialog: DialogFragment, launchType: ConfigDialog.ConfigDialogType, program: Program) {
-        info("Returned program is " + program)
         this.program = program
         if (launchType == ConfigDialog.ConfigDialogType.RUN) {
             program.source = editor.text.toString()

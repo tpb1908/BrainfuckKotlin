@@ -29,14 +29,14 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
     var inStream = Stack<Int>()
         private set
 
+    init {
+        if (program.input.isNotEmpty()) {
+            program.input.split(",").map { it.trim() }.mapTo(inStream, {Integer.parseInt(it)})
+        }
+    }
+
     override fun run() {
         if (checkProgram()) {
-
-            if (program.input.isNotEmpty()) {
-                program.input.split(",").map { it.trim() }.mapTo(inStream, {Integer.parseInt(it)})
-                info("Input is " + inStream)
-            }
-
             while (pos < program.source.length) {
                 if (stopRequested) return
                 if (paused || waitingForInput) {
