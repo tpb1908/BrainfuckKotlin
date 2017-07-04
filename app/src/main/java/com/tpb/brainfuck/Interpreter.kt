@@ -3,7 +3,7 @@ package com.tpb.brainfuck
 import android.support.annotation.StringRes
 import android.util.SparseIntArray
 import com.tpb.brainfuck.db.Program
-import java.lang.StringBuilder
+import java.lang.*
 import java.util.*
 
 /**
@@ -26,10 +26,16 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
     private var shouldUseBreakpoints = true
     @Volatile private var stopRequested = false
     var complete = false
-    private var inStream = ArrayList<Int>()
+    private var inStream = Stack<Int>()
 
     override fun run() {
         if (checkProgram()) {
+
+            if (program.input.isNotEmpty()) {
+                program.input.split(",").map { it.trim() }.mapTo(inStream, {Integer.parseInt(it)})
+                info("Input is " + inStream)
+            }
+
             while (pos < program.source.length) {
                 if (stopRequested) return
                 if (paused || waitingForInput) {
@@ -74,10 +80,6 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
         }
 
         return true
-    }
-
-    fun setInput(input: ArrayList<Int>) {
-        inStream = input
     }
 
     fun stop() {
@@ -132,8 +134,7 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
             }
             ',' -> {
                 if (inStream.isNotEmpty()) {
-                    mem[pointer] = inStream.last()
-                    inStream.remove(inStream.size)
+                    mem[pointer] = inStream.pop()
                 } else {
                     waitingForInput = true
                     io.getInput()

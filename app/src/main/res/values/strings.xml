@@ -55,6 +55,7 @@
     <string name="label_restart">Restart</string>
 
     <string name="error_no_program_name">Enter a name for the program</string>
+    <string name="error_invalid_input">Invalid input array</string>
     <string name="error_min_memory_size">Memory size must be at least 1</string>
     <string name="error_max_memory_size">Memory size must be less than 100000</string>
     <string name="error_max_min">Max value must be larger than min</string>
@@ -65,18 +66,17 @@
 
     <string name="program_name_hint">Program name</string>
     <string name="program_description_hint">Program description</string>
-    <string name="program_output_suffix_hint">A string to add to output</string>
+    <string name="program_output_suffix_hint">Output suffix</string>
+    <string name="program_input_stream_hint">Comma separated input</string>
     <string name="program_mem_size_hint">Memory size. Default 10000</string>
     <string name="program_max_hint">Maximum value of values in memory</string>
     <string name="program_min_hint">Minimum value of values in memory</string>
-
     <string name="program_overflow_error_hint">Error on value overflow</string>
     <string name="program_overflow_wrap_hint">Wrap on value overflow</string>
     <string name="program_overflow_cap_hint">Cap on value overflow</string>
     <string name="program_underflow_error_hint">Error on value underflow</string>
     <string name="program_underflow_wrap_hint">Wrap on value underflow</string>
     <string name="program_underflow_cap_hint">Cap on value underflow</string>
-
     <string name="program_pointer_over_error_hint">Error on pointer overflow</string>
     <string name="program_pointer_over_wrap_hint">Wrap pointer on overflow</string>
     <string name="program_pointer_over_expand_hint">Expand on pointer overflow</string>

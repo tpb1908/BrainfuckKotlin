@@ -106,6 +106,17 @@ class ConfigDialog : DialogFragment() {
             } else {
                 view.findViewById<TextInputLayout>(R.id.name_wrapper).error = null
             }
+            val inputString = view.findViewById<EditText>(R.id.input_stream_input).text.toString()
+            if (inputString.isNotEmpty()) {
+                try {
+                    val ints = ArrayList<Int>()
+                    inputString.split(",").map { it.trim() }.mapTo(ints, {Integer.parseInt(it)})
+                } catch (e: Exception) {
+                    error = true
+                    view.findViewById<TextInputLayout>(R.id.input_stream_wrapper).error = getString(R.string.error_invalid_input)
+                }
+            }
+
             var capacity = 10000
             val sizeInput = view.findViewById<EditText>(R.id.size_input)
             val sizeWrapper = view.findViewById<TextInputLayout>(R.id.size_wrapper)
@@ -147,6 +158,7 @@ class ConfigDialog : DialogFragment() {
                 program.maxVal = maxVal
                 program.description = view.findViewById<EditText>(R.id.desc_input).text.toString()
                 program.outSuffix = view.findViewById<EditText>(R.id.output_suffix_input).text.toString()
+                program.input = inputString
                 listener?.onPositiveClick(this, type, program)
                 dialog?.dismiss()
             }

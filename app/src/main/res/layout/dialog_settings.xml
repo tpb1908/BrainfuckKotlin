@@ -78,10 +78,23 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_stream_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/output_suffix_wrapper"
+                android:hint="@string/program_input_stream_hint">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/input_stream_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:id="@+id/size_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/output_suffix_wrapper">
+                android:layout_below="@id/input_stream_wrapper">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/size_input"
