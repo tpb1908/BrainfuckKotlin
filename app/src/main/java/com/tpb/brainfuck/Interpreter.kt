@@ -27,13 +27,14 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
 
 
     override fun run() {
-        if(checkProgram()) {
-            while(pos < program.source.length) {
+        if (checkProgram()) {
+            while (pos < program.source.length) {
                 if (stopRequested) return
                 if (paused || waitingForInput) {
                     try {
                         Thread.sleep(100)
-                    } catch (exc : InterruptedException) {}
+                    } catch (exc: InterruptedException) {
+                    }
                 } else {
                     step()
                 }
@@ -63,7 +64,7 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
         shouldUseBreakpoints = useBreakPoints
     }
 
-    fun checkProgram() : Boolean {
+    fun checkProgram(): Boolean {
         val loopStarts = program.source.occurrencesOf('[')
         val loopEnds = program.source.occurrencesOf(']')
         if (loopStarts != loopEnds) {
@@ -77,10 +78,10 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
         loopPositions.clear()
         val openings = Stack<Int>()
         for (i in 0 until program.source.length) {
-            if(program.source[i] == '[') {
+            if (program.source[i] == '[') {
                 openings.push(i)
             } else if (program.source[i] == ']') {
-                if(openings.isEmpty()) {
+                if (openings.isEmpty()) {
                     io.error(i, R.string.error_loop_mismatch)
                     return false
                 } else {
@@ -94,7 +95,7 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
     }
 
     fun input(input: Char) {
-        if(waitingForInput) {
+        if (waitingForInput) {
             mem[pointer] = input.toInt()
             waitingForInput = false
         }
@@ -108,7 +109,7 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
         when (program.source[pos]) {
             '>' -> {
                 pointer++
-                if(pointer >= mem.size) {
+                if (pointer >= mem.size) {
                 }
             }
             '<' -> {
@@ -148,29 +149,23 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
     }
 
     fun getMemoryDump(): String {
-        val builder = StringBuilder()
-        var lastUsedPosition = 0
-        builder.append('[')
-        for (i in 0 until mem.size) {
-            if (mem[i] != 0 || i == mem.size - 1) {
-                if (lastUsedPosition < i - 1) {
-                    builder.append(lastUsedPosition)
-                            .append("-")
-                            .append(i - 1)
-                            .append(" : ")
-                            .append(0)
+        val b = StringBuilder("[")
+        var last = 0
+        var lastDiffPos = 0
+        mem.forEachIndexed { index, i ->
+            if (index == mem.size - 1 || mem[index + 1] != i) {
+                if (i != last) {
+                    b.append(index)
                 } else {
-                    builder.append(i)
-                            .append(" : ")
-                            .append(mem[i])
+                    b.append(lastDiffPos).append("..").append(index)
                 }
-                builder.append(", ")
-                lastUsedPosition = i + 1
+                b.append(" = ").append(i).append(", ")
+                lastDiffPos = index + 1
             }
+            last = i
         }
-        builder.setLength(builder.length - 2)
-        builder.append(']')
-        return builder.toString()
+        b.setLength(b.length - 2)
+        return b.append("]").toString()
     }
 
 
