@@ -37,6 +37,7 @@ class ConfigDialog : DialogFragment() {
         if (program.name.isNotEmpty()) view.findViewById<EditText>(R.id.name_input).setText(program.name)
         if (program.description.isNotEmpty()) view.findViewById<EditText>(R.id.desc_input).setText(program.description)
         if (program.outSuffix.isNotEmpty()) view.findViewById<EditText>(R.id.output_suffix_input).setText(program.outSuffix)
+        if (program.input.isNotEmpty()) view.findViewById<EditText>(R.id.input_stream_input).setText(program.input)
 
         view.findViewById<EditText>(R.id.size_input).setText(Integer.toString(program.memoryCapacity))
         view.findViewById<EditText>(R.id.min_input).setText(Integer.toString(program.minVal))
@@ -159,6 +160,7 @@ class ConfigDialog : DialogFragment() {
                 program.description = view.findViewById<EditText>(R.id.desc_input).text.toString()
                 program.outSuffix = view.findViewById<EditText>(R.id.output_suffix_input).text.toString()
                 program.input = inputString
+                info("Program being returned is " + program)
                 listener?.onPositiveClick(this, type, program)
                 dialog?.dismiss()
             }
