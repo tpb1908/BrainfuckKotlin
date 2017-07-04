@@ -115,7 +115,8 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         }
 
         dump_button.setOnClickListener {
-            outputMessage(interpreter.getMemoryDump())
+            outputMessage(String.format(getString(R.string.program_debug_format,
+                    interpreter.pos, interpreter.pointer, interpreter.getMemoryDump())))
         }
 
         breakpoint_button.setOnClickListener {
@@ -135,7 +136,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
                 val inChar = input.first()
                 output.append(inChar + "\n")
                 interpreter.input(inChar)
-                input_edittext.setText(null)
+                input_edittext.text = null
                 input_layout.visibility = View.GONE
             } else {
                 input_edittext.error = getString(R.string.error_input_a_character)

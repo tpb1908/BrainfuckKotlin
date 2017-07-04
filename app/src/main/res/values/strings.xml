@@ -28,13 +28,6 @@
     <string name="enter">↩</string>
     <string name="breakpoint">\\</string>
 
-    <string name="transition_background">background</string>
-
-    <string name="message_error">Error at position %1$d\nMessage: %2$s</string>
-
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="cancel">Cancel</string>
 
     <string name="title_editor">Editor</string>
     <string name="title_editing">Editing %1$s</string>
@@ -50,6 +43,7 @@
     <string name="message_save_exit_dialog">Save before closing?</string>
     <string name="message_exit_running_program_dialog">Stop running program?</string>
     <string name="message_hit_breakpoint">Hit breakpoint</string>
+    <string name="message_error">Error at position %1$d\nMessage: %2$s</string>
 
     <string name="label_breakpoint_ignore_button">Ignore</string>
     <string name="label_breakpoint_break_button">Break</string>
@@ -57,7 +51,6 @@
     <string name="label_play">Play</string>
     <string name="label_pause">Pause</string>
     <string name="label_step">Step</string>
-    <string name="label_break">Break</string>
     <string name="label_debug">Debug</string>
     <string name="label_restart">Restart</string>
 
@@ -89,6 +82,9 @@
     <string name="program_pointer_over_expand_hint">Expand on pointer overflow</string>
     <string name="program_pointer_under_error_hint">Error on pointer underflow</string>
     <string name="program_pointer_under_wrap_hint">Wrap pointer on underflow</string>
+
+    <string name="program_debug_format">Program position: %1$d\nPointer position: %2$d\nMemory: %3$s</string>
+
 
     <string name="help_text">
         <b>Brainfuck is a language consisting of only 8 characters</b>

@@ -144,10 +144,6 @@ class Editor : AppCompatActivity(), ConfigDialog.ConfigDialogListener {
             return intent
         }
 
-        fun createTransition(activity: Activity, view: View): Bundle {
-            return ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, activity.getString(R.string.transition_background)).toBundle()
-        }
-
     }
 
 }

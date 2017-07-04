@@ -25,18 +25,8 @@ class MainActivity : AppCompatActivity(), ProgramAdapter.ProgramTouchHandler {
 
 
         fab.setOnClickListener {
-            startActivity(Editor.createIntent(this), Editor.createTransition(this, fab))
+            startActivity(Editor.createIntent(this))
         }
-
-//        thread {
-//            // dao.deleteAllPrograms()
-//            Log.i("Test", "Running on thread " + p.toString())
-//            Log.i("Insertion", "Returned " + dao.insert(p))
-//            p.description = "Modified description"
-//            Log.i("Test", "Program is now  " + p.toString())
-//            dao.update(p)
-//
-//        }
     }
 
     override fun run(program: Program) {
@@ -44,7 +34,7 @@ class MainActivity : AppCompatActivity(), ProgramAdapter.ProgramTouchHandler {
     }
 
     override fun open(program: Program, view: View) {
-        startActivity(Editor.createIntent(this, program.uid), Editor.createTransition(this, view))
+        startActivity(Editor.createIntent(this, program.uid))
     }
 
     override fun remove(program: Program) {

@@ -16,8 +16,10 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
     }
 
     private val mem: Array<Int> = Array(program.memoryCapacity, { 0 })
-    private var pos: Int = 0
-    private var pointer: Int = 0
+    var pos: Int = 0
+        private set
+    var pointer: Int = 0
+        private set
     private var waitingForInput: Boolean = false
     private var paused: Boolean = true
     private var loopPositions: SparseIntArray = SparseIntArray()
@@ -64,7 +66,7 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
         shouldUseBreakpoints = useBreakPoints
     }
 
-    fun checkProgram(): Boolean {
+    private fun checkProgram(): Boolean {
         val loopStarts = program.source.occurrencesOf('[')
         val loopEnds = program.source.occurrencesOf(']')
         if (loopStarts != loopEnds) {
@@ -74,7 +76,7 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
         return findLoopPositions()
     }
 
-    fun findLoopPositions(): Boolean {
+    private fun findLoopPositions(): Boolean {
         loopPositions.clear()
         val openings = Stack<Int>()
         for (i in 0 until program.source.length) {

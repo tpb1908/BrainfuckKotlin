@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
 import com.tpb.brainfuck.db.Program
 import com.tpb.brainfuck.db.ProgramDao
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -46,7 +48,7 @@ class ProgramAdapter(dao: ProgramDao, val handler: ProgramTouchHandler) : Recycl
     }
 
     override fun onBindViewHolder(holder: ProgramHolder, position: Int) {
-        val prog = programs.get(position)
+        val prog = programs[position]
         holder.title.text = prog.name
         holder.description.text = prog.description
         holder.itemView.setOnClickListener { handler.open(prog, holder.itemView) }
@@ -59,9 +61,9 @@ class ProgramAdapter(dao: ProgramDao, val handler: ProgramTouchHandler) : Recycl
     }
 
     class ProgramHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val title = view.text_title
-        val description = view.text_description
-        val runButton = view.quick_run
+        val title: TextView = view.text_title
+        val description: TextView = view.text_description
+        val runButton: ImageButton = view.quick_run
     }
 
     interface ProgramTouchHandler {
