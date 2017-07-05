@@ -2,7 +2,7 @@ package com.tpb.brainfuck
 
 import android.support.annotation.StringRes
 import android.util.SparseIntArray
-import com.tpb.brainfuck.db.Program
+import com.tpb.brainfuck.db.*
 import java.lang.*
 import java.util.*
 
@@ -15,7 +15,7 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
         shouldUseBreakpoints = useBreakPoints
     }
 
-    private val mem: Array<Int> = Array(program.memoryCapacity, { 0 })
+    private var mem: IntArray = kotlin.IntArray(program.memoryCapacity)
     var pos: Int = 0
         private set
     var pointer: Int = 0
@@ -119,16 +119,53 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
             '>' -> {
                 pointer++
                 if (pointer >= mem.size) {
+                    when (program.pointerOverflowBehaviour) {
+                        PointerOverflowBehaviour.WRAP -> pointer = 0
+                        PointerOverflowBehaviour.EXPAND -> mem += IntArray(program.memoryCapacity)
+                        PointerOverflowBehaviour.ERROR -> {
+                            complete = true
+                            io.error(pos, R.string.error_pointer_overflow)
+                        }
+                    }
                 }
             }
             '<' -> {
                 pointer--
+                if (pointer < 0) {
+                    when (program.pointerUnderflowBehaviour) {
+                        PointerUnderflowBehaviour.WRAP -> pointer = mem.size - 1
+                        PointerUnderflowBehaviour.ERROR -> {
+                            complete = true
+                            io.error(pos, R.string.error_pointer_underflow)
+                        }
+                    }
+                }
             }
             '+' -> {
                 mem[pointer]++
+                if (mem[pointer] > program.maxVal) {
+                    when (program.valueOverflowBehaviour) {
+                        ValueOverflowBehaviour.CAP -> mem[pointer] = program.maxVal
+                        ValueOverflowBehaviour.WRAP -> mem[pointer] = program.minVal
+                        ValueOverflowBehaviour.ERROR -> {
+                            complete = true
+                            io.error(pos, R.string.error_value_overflow)
+                        }
+                    }
+                }
             }
             '-' -> {
                 mem[pointer]--
+                if (mem[pointer] < program.minVal) {
+                    when (program.valueUnderflowBehaviour) {
+                        ValueUnderflowBehaviour.CAP -> mem[pointer] = program.minVal
+                        ValueUnderflowBehaviour.WRAP -> mem[pointer] = program.maxVal
+                        ValueUnderflowBehaviour.ERROR -> {
+                            complete = true
+                            io.error(pos, R.string.error_value_underflow)
+                        }
+                    }
+                }
             }
             '.' -> {
                 io.output(mem[pointer].toChar().toString())

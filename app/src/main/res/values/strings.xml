@@ -63,6 +63,10 @@
     <string name="error_loop_counts">The number of loop openings must be equal to the number of loop closings</string>
     <string name="error_loop_mismatch">Mismatched loops</string>
     <string name="error_input_a_character">Input a character</string>
+    <string name="error_pointer_overflow">Pointer overflow</string>
+    <string name="error_pointer_underflow">Pointer underflow</string>
+    <string name="error_value_overflow">Value overflow</string>
+    <string name="error_value_underflow">Value underflow</string>
 
     <string name="program_name_hint">Program name</string>
     <string name="program_description_hint">Program description</string>
