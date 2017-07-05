@@ -43,9 +43,21 @@ class Application : Application() {
 
         }
 
-        fun initDefaultPrograms() {
+        private fun initDefaultPrograms() {
             thread {
                 db.programDao().insertAll(defaults)
+            }
+        }
+
+        fun restoreDefaultValues() {
+            thread {
+                val dao = db.programDao()
+                defaults.reversed().forEach {
+                    if (dao.getProgramIfExists(it.name, it.source) == null) {
+                        dao.insert(it)
+                    }
+                }
+
             }
         }
 

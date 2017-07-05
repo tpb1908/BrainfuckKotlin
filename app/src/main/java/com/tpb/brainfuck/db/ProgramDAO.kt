@@ -15,6 +15,9 @@ import io.reactivex.Flowable
     @Query("SELECT * FROM program WHERE uid = :arg0 LIMIT 1")
     fun getProgram(id: Long): Program
 
+    @Query("SELECT * FROM program WHERE name LIKE :arg0 AND source LIKE :arg1 LIMIT 1")
+    fun getProgramIfExists(name: String, source: String): Program?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(program: Program): Long
 

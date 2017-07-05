@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), ProgramAdapter.ProgramTouchHandler {
         } else if (item?.itemId == android.R.id.home) {
             onBackPressed()
         } else if(item?.itemId == R.id.menu_item_restore_defaults) {
-            Application.initDefaultPrograms()
+            Application.restoreDefaultValues()
         }
 
         return super.onOptionsItemSelected(item)
