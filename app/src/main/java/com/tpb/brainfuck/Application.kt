@@ -4,6 +4,7 @@ import android.app.Application
 import android.arch.persistence.room.Room
 import android.content.Context
 import android.support.annotation.StyleRes
+import android.support.annotation.VisibleForTesting
 import com.tpb.brainfuck.db.Database
 import com.tpb.brainfuck.db.Program
 import com.tpb.brainfuck.db.ProgramMigrations
@@ -61,7 +62,7 @@ class Application : Application() {
             }
         }
 
-        private val defaults = listOf(Program(
+        val defaults = listOf(Program(
                 name = "QWERTY to DVORAK",
                 description = "Converts QWERTY keycodes to DVORAK",
                 source = "+>>>>>>>++[+<[>]>[<++>-]<]<[[>+>+<<-]>>-]>+++++[>+++++++<-]>[[<<+>>-]<<-]\n" +
@@ -151,6 +152,7 @@ class Application : Application() {
                         source = "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.",
                         memoryCapacity = 8
                 ))
+
 
     }
 

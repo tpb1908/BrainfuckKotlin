@@ -62,3 +62,8 @@ dependencies {
     testCompile 'com.nhaarman:mockito-kotlin-kt1.1:1.5.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
+
+task clearData(type: Exec) {
+    def clearDataCommand = ['adb', 'shell', 'pm', 'clear', 'com.tpb.brainfuck']
+    commandLine clearDataCommand
+}
