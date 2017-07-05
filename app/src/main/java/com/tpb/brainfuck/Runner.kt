@@ -207,6 +207,9 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
     }
 
     @UiThread override fun complete() {
+        val finished = SpannableString(getString(R.string.message_complete))
+        finished.setSpan(ForegroundColorSpan(Color.GREEN), 0, finished.length, 0)
+        outputMessage(finished)
         interpreter.setPaused(true)
         setPausedUi()
     }

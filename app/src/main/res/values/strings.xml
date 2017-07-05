@@ -48,6 +48,7 @@
     <string name="message_exit_running_program_dialog">Stop running program?</string>
     <string name="message_hit_breakpoint">Hit breakpoint</string>
     <string name="message_error">Error at position %1$d\nMessage: %2$s</string>
+    <string name="message_complete">Program complete</string>
 
     <string name="label_breakpoint_ignore_button">Ignore</string>
     <string name="label_breakpoint_break_button">Break</string>
