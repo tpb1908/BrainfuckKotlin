@@ -23,8 +23,13 @@ class Editor : AppCompatActivity(), ConfigDialog.ConfigDialogListener {
     lateinit var dao: ProgramDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(Application.themeId)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editor)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
         dao = Application.db.programDao()
         val id = intent?.extras?.getLong(getString(R.string.parcel_program), -1) ?: -1
         if (id != -1L) {

@@ -3,6 +3,8 @@ package com.tpb.brainfuck
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import com.tpb.brainfuck.db.Program
 import kotlinx.android.synthetic.main.activity_main.*
@@ -12,8 +14,12 @@ class MainActivity : AppCompatActivity(), ProgramAdapter.ProgramTouchHandler {
     lateinit var adapter: ProgramAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(Application.themeId)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        info("Actionbar ${actionBar} support ${supportActionBar}")
+
 
         val dao = Application.db.programDao()
 
@@ -27,6 +33,26 @@ class MainActivity : AppCompatActivity(), ProgramAdapter.ProgramTouchHandler {
         fab.setOnClickListener {
             startActivity(Editor.createIntent(this))
         }
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu?.clear()
+        if (Application.themeId == R.style.AppTheme) {
+            menu?.add(0, R.id.menu_item_switch_theme,  Menu.NONE, getString(R.string.menu_item_dark_theme))
+        } else {
+            menu?.add(0, R.id.menu_item_switch_theme,  Menu.NONE, getString(R.string.menu_item_light_theme))
+        }
+        menu?.add(0, R.id.menu_item_restore_defaults, Menu.NONE, getString(R.string.menu_item_restore_defaults))
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.menu_item_switch_theme) {
+            Application.toggleTheme(this)
+            recreate()
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun run(program: Program) {

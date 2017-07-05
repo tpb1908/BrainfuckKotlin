@@ -3,6 +3,7 @@ package com.tpb.brainfuck
 import android.app.Application
 import android.arch.persistence.room.Room
 import android.content.Context
+import android.support.annotation.StyleRes
 import com.tpb.brainfuck.db.Database
 import com.tpb.brainfuck.db.Program
 import com.tpb.brainfuck.db.ProgramMigrations
@@ -15,6 +16,33 @@ class Application : Application() {
 
     companion object {
         lateinit var db: Database
+        @StyleRes var themeId: Int = R.style.AppTheme
+
+        fun toggleTheme(context: Context) {
+            if (themeId == R.style.AppTheme) {
+                enableDarkTheme(context)
+            } else {
+                enableLightTheme(context)
+            }
+        }
+
+        fun enableDarkTheme(context: Context) {
+            themeId = R.style.AppTheme_Dark
+            context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
+                    .edit()
+                    .putBoolean("darkTheme", true)
+                    .apply()
+        }
+
+        fun enableLightTheme(context: Context) {
+            themeId = R.style.AppTheme
+            context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
+                    .edit()
+                    .putBoolean("darkTheme", false)
+                    .apply()
+
+        }
+
     }
 
     override fun onCreate() {
@@ -27,6 +55,10 @@ class Application : Application() {
             sp.edit().putBoolean("firstRun", false).apply()
             initDefaultPrograms()
         }
+        if (sp.getBoolean("darkTheme", false)) {
+            themeId = R.style.AppTheme_Dark
+        }
+
     }
 
     private fun initDefaultPrograms() {

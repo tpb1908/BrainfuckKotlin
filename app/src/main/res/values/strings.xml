@@ -9,6 +9,10 @@
     <string name="extra_start_immediately">start_immediately</string>
     <string name="extra_config_type">config_dialog_type</string>
 
+    <string name="menu_item_light_theme">Light theme</string>
+    <string name="menu_item_dark_theme">Dark theme</string>
+    <string name="menu_item_restore_defaults">Restore defaults</string>
+
     <string name="prompt_input">Input: </string>
 
     <string name="decrement"> &lt; </string>

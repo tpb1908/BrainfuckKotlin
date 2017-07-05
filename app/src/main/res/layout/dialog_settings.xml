@@ -13,15 +13,13 @@
         android:paddingBottom="@dimen/dialog_title_vertical_margin"
         android:paddingLeft="@dimen/dialog_title_horizontal_margin"
         android:paddingRight="@dimen/dialog_title_horizontal_margin"
-        android:paddingTop="@dimen/dialog_title_vertical_margin"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+        android:paddingTop="@dimen/dialog_title_vertical_margin">
 
         <TextView
             android:id="@+id/settings_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-            android:textColor="@color/colorPrimaryText"
+            android:textSize="20sp"
             tools:text="Settings"/>
 
     </LinearLayout>

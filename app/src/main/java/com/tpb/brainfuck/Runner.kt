@@ -52,8 +52,13 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(Application.themeId)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_runner)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
         if (!isValidIntent(this, intent)) {
             finish()
         } else if (intent.extras.containsKey(getString((R.string.parcel_program)))) {
@@ -69,8 +74,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
                 runOnUiThread { setTitle(); setup() }
             }
         }
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+
     }
 
     private fun setTitle() {
