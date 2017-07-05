@@ -25,7 +25,6 @@ import io.mironov.smuggler.AutoParcelable
 ) : AutoParcelable
 
 
-
 enum class ValueOverflowBehaviour {
     ERROR, WRAP, CAP
 }

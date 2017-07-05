@@ -1,6 +1,7 @@
 package com.tpb.brainfuck
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
@@ -8,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import com.tpb.brainfuck.db.Program
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity(), ProgramAdapter.ProgramTouchHandler {
 
@@ -52,6 +54,8 @@ class MainActivity : AppCompatActivity(), ProgramAdapter.ProgramTouchHandler {
             recreate()
         } else if (item?.itemId == android.R.id.home) {
             onBackPressed()
+        } else if(item?.itemId == R.id.menu_item_restore_defaults) {
+            Application.initDefaultPrograms()
         }
 
         return super.onOptionsItemSelected(item)
@@ -66,5 +70,11 @@ class MainActivity : AppCompatActivity(), ProgramAdapter.ProgramTouchHandler {
     }
 
     override fun remove(program: Program) {
+        thread { Application.db.programDao().delete(program) }
+        Snackbar.make(coordinator, "Deleted", Snackbar.LENGTH_LONG)
+                .setAction("UNDO") {
+                    thread { Application.db.programDao().insert(program) }
+                }
+                .show()
     }
 }

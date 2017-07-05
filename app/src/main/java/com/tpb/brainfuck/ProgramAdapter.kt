@@ -1,6 +1,7 @@
 package com.tpb.brainfuck
 
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,10 +27,6 @@ class ProgramAdapter(dao: ProgramDao, val handler: ProgramTouchHandler) : Recycl
                 programs = it.reversed().toMutableList()
                 recycler?.scrollToPosition(0)
                 notifyItemInserted(0)
-            } else if (programs.size - it.size == 1) {
-                val pos = programs.indexOf(programs.minus(it).first())
-                programs.removeAt(pos)
-                notifyItemRemoved(pos)
             } else {
                 programs = it.reversed().toMutableList()
                 notifyDataSetChanged()
@@ -41,6 +38,16 @@ class ProgramAdapter(dao: ProgramDao, val handler: ProgramTouchHandler) : Recycl
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         recycler = recyclerView
+        val dismisser = object: ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT.or(ItemTouchHelper.RIGHT)) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                handler.remove(programs[viewHolder.adapterPosition])
+                notifyItemRemoved(viewHolder.adapterPosition)
+            }
+
+            override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean = true
+        }
+        ItemTouchHelper(dismisser).attachToRecyclerView(recyclerView)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProgramHolder {
