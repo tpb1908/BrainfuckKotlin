@@ -20,21 +20,14 @@ class MainActivity : AppCompatActivity(), ProgramAdapter.ProgramTouchHandler {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        info("Actionbar ${actionBar} support ${supportActionBar}")
-
-
         val dao = Application.db.programDao()
 
         adapter = ProgramAdapter(dao, this)
-
         program_recycler.adapter = adapter
         program_recycler.layoutManager = LinearLayoutManager(this)
         program_recycler.bindFloatingActionButton(fab)
 
-
-        fab.setOnClickListener {
-            startActivity(Editor.createIntent(this))
-        }
+        fab.setOnClickListener { startActivity(Editor.createIntent(this)) }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
@@ -72,9 +65,7 @@ class MainActivity : AppCompatActivity(), ProgramAdapter.ProgramTouchHandler {
     override fun remove(program: Program) {
         thread { Application.db.programDao().delete(program) }
         Snackbar.make(coordinator, "Deleted", Snackbar.LENGTH_LONG)
-                .setAction("UNDO") {
-                    thread { Application.db.programDao().insert(program) }
-                }
+                .setAction("UNDO") { thread { Application.db.programDao().insert(program) } }
                 .show()
     }
 }

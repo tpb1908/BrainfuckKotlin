@@ -79,7 +79,6 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
                 }
             }
         }
-
         return true
     }
 
@@ -103,15 +102,21 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
         shouldUseBreakpoints = useBreakPoints
     }
 
-    fun input(input: Char) {
+    fun input(input: Char): Boolean {
         if (waitingForInput) {
             mem[pointer] = input.toInt()
             waitingForInput = false
+            return true
         }
+        return false
     }
 
-    fun performStep() {
-        if (pos < program.source.length) step()
+    fun performStep(): Boolean {
+        if (pos < program.source.length) {
+            step()
+            return true
+        }
+        return false
     }
 
     private fun step() {

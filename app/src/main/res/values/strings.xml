@@ -1,9 +1,6 @@
 <resources>
     <string name="app_name">Brainfuck</string>
 
-    <string name="action_restore">Restore programs</string>
-    <string name="action_help">Help</string>
-
     <string name="parcel_program">parcel_program</string>
     <string name="extra_program_id">program_id</string>
     <string name="extra_start_immediately">start_immediately</string>
@@ -12,8 +9,6 @@
     <string name="menu_item_light_theme">Light theme</string>
     <string name="menu_item_dark_theme">Dark theme</string>
     <string name="menu_item_restore_defaults">Restore defaults</string>
-
-    <string name="prompt_input">Input: </string>
 
     <string name="decrement"> &lt; </string>
     <string name="increment"> &gt;</string>
@@ -32,7 +27,6 @@
     <string name="enter">↩</string>
     <string name="breakpoint">\\</string>
 
-
     <string name="title_editor">Editor</string>
     <string name="title_editing">Editing %1$s</string>
     <string name="title_runner">Runner</string>
@@ -41,14 +35,15 @@
     <string name="title_settings_run_dialog">Run</string>
     <string name="title_settings_save_dialog">Save</string>
 
-    <string name="text_paused">Paused</string>
-    <string name="text_unpaused">Unpaused</string>
-
     <string name="message_save_exit_dialog">Save before closing?</string>
     <string name="message_exit_running_program_dialog">Stop running program?</string>
     <string name="message_hit_breakpoint">Hit breakpoint</string>
     <string name="message_error">Error at position %1$d\nMessage: %2$s</string>
     <string name="message_complete">Program complete</string>
+    <string name="message_input">Input: </string>
+    <string name="message_paused">Paused</string>
+    <string name="message_unpaused">Unpaused</string>
+    <string name="message_debug_format">Program position: %1$d\nPointer position: %2$d\nInput: %3$s\nMemory: %4$s</string>
 
     <string name="label_breakpoint_ignore_button">Ignore</string>
     <string name="label_breakpoint_break_button">Break</string>
@@ -73,66 +68,24 @@
     <string name="error_value_overflow">Value overflow</string>
     <string name="error_value_underflow">Value underflow</string>
 
-    <string name="program_name_hint">Program name</string>
-    <string name="program_description_hint">Program description</string>
-    <string name="program_output_suffix_hint">Output suffix</string>
-    <string name="program_input_stream_hint">Comma separated input</string>
-    <string name="program_mem_size_hint">Memory size. Default 10000</string>
-    <string name="program_max_hint">Maximum value of values in memory</string>
-    <string name="program_min_hint">Minimum value of values in memory</string>
-    <string name="program_overflow_error_hint">Error on value overflow</string>
-    <string name="program_overflow_wrap_hint">Wrap on value overflow</string>
-    <string name="program_overflow_cap_hint">Cap on value overflow</string>
-    <string name="program_underflow_error_hint">Error on value underflow</string>
-    <string name="program_underflow_wrap_hint">Wrap on value underflow</string>
-    <string name="program_underflow_cap_hint">Cap on value underflow</string>
-    <string name="program_pointer_over_error_hint">Error on pointer overflow</string>
-    <string name="program_pointer_over_wrap_hint">Wrap pointer on overflow</string>
-    <string name="program_pointer_over_expand_hint">Expand on pointer overflow</string>
-    <string name="program_pointer_under_error_hint">Error on pointer underflow</string>
-    <string name="program_pointer_under_wrap_hint">Wrap pointer on underflow</string>
-
-    <string name="program_debug_format">Program position: %1$d\nPointer position: %2$d\nInput: %3$s\nMemory: %4$s</string>
-
-
-    <string name="help_text">
-        <b>Brainfuck is a language consisting of only 8 characters</b>
-        \n\n
-        Memory is in the form of an array of integers
-        \n\n
-        Single characters can be input, and are then converted to their ASCII values
-        \n
-        Output values are converted back to characters using their ASCII values
-        \n
-        The only other piece of data is the pointer, which refers to the position in
-        the array
-        \n\n
-        The command characters are as follows
-        \n
-        <b>&gt;</b> Increment the pointer
-        \n
-        <b>&lt;</b> Decrement the pointer
-        \n
-        <b>+</b> Increment the value at the pointer position in the array
-        \n
-        <b>-</b> Decrement the value at the pointer position in the array
-        \n
-        <b>.</b> Output the value at the pointer position in the array
-        \n
-        <b>,</b> Accept an input character, and store it at the pointer position in the array
-        \n
-        <b>[</b> If the value at the pointer position in the array is zero, then move the pointer
-        forward to the position after the matching ] command
-        \n
-        <b>]</b> If the value at the pointer position in the array is nonzero, then move the pointer
-        to the matching ] command
-
-        \n\n
-        This app also includes a 9th character
-        \n
-        <b>\\</b> The backslash is used to pause the program, allowing it to be debugged
-
-    </string>
+    <string name="hint_program_name">Program name</string>
+    <string name="hint_program_description">Program description</string>
+    <string name="hint_program_output_suffix">Output suffix</string>
+    <string name="hint_program_input_stream">Comma separated input</string>
+    <string name="hint_program_mem_size">Memory size. Default 10000</string>
+    <string name="hint_program_max_value">Maximum value of values in memory</string>
+    <string name="hint_program_min_value">Minimum value of values in memory</string>
+    <string name="hint_program_value_overflow_error">Error on value overflow</string>
+    <string name="hint_program_value_overflow_wrap">Wrap on value overflow</string>
+    <string name="hint_program_value_overflow_cap">Cap on value overflow</string>
+    <string name="hint_program_underflow_error">Error on value underflow</string>
+    <string name="hint_program_value_underflow_wrap">Wrap on value underflow</string>
+    <string name="hint_program_value_underflow_cap">Cap on value underflow</string>
+    <string name="hint_program_pointer_overflow">Error on pointer overflow</string>
+    <string name="hint_program_pointer_overflow_wrap">Wrap pointer on overflow</string>
+    <string name="hint_program_pointer_overflow_expand">Expand on pointer overflow</string>
+    <string name="hint_program_pointer_underflow_error">Error on pointer underflow</string>
+    <string name="hint_program_pointer_underflow_wrap">Wrap pointer on underflow</string>
 
 
 </resources>

@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:ems="10"
-                    android:hint="@string/program_mem_size_hint"
+                    android:hint="@string/hint_program_mem_size"
                     android:inputType="numberSigned"/>
             </android.support.design.widget.TextInputLayout>
 
@@ -116,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:ems="10"
-                    android:hint="@string/program_max_hint"
+                    android:hint="@string/hint_program_max_value"
                     android:inputType="numberSigned"/>
             </android.support.design.widget.TextInputLayout>
 
@@ -132,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:ems="10"
-                    android:hint="@string/program_min_hint"
+                    android:hint="@string/hint_program_min_value"
                     android:inputType="numberSigned"/>
             </android.support.design.widget.TextInputLayout>
 
@@ -147,19 +147,19 @@
                     android:id="@+id/pointer_over_error_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/program_pointer_over_error_hint"/>
+                    android:text="@string/hint_program_pointer_overflow"/>
 
                 <RadioButton
                     android:id="@+id/pointer_over_wrap_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/program_pointer_over_wrap_hint"/>
+                    android:text="@string/hint_program_pointer_overflow_wrap"/>
 
                 <RadioButton
                     android:id="@+id/pointer_over_expand_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/program_pointer_over_expand_hint"/>
+                    android:text="@string/hint_program_pointer_overflow_expand"/>
 
             </RadioGroup>
 
@@ -174,13 +174,13 @@
                     android:id="@+id/pointer_under_error_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/program_pointer_under_error_hint"/>
+                    android:text="@string/hint_program_pointer_underflow_error"/>
 
                 <RadioButton
                     android:id="@+id/pointer_under_wrap_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/program_pointer_under_wrap_hint"/>
+                    android:text="@string/hint_program_pointer_underflow_wrap"/>
 
             </RadioGroup>
 
@@ -195,19 +195,19 @@
                     android:id="@+id/value_over_error_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/program_overflow_error_hint"/>
+                    android:text="@string/hint_program_value_overflow_error"/>
 
                 <RadioButton
                     android:id="@+id/value_over_wrap_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/program_overflow_wrap_hint"/>
+                    android:text="@string/hint_program_value_overflow_wrap"/>
 
                 <RadioButton
                     android:id="@+id/value_over_cap_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/program_overflow_cap_hint"/>
+                    android:text="@string/hint_program_value_overflow_cap"/>
             </RadioGroup>
 
             <RadioGroup
@@ -221,19 +221,19 @@
                     android:id="@+id/value_under_error_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/program_underflow_error_hint"/>
+                    android:text="@string/hint_program_underflow_error"/>
 
                 <RadioButton
                     android:id="@+id/value_under_wrap_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/program_underflow_wrap_hint"/>
+                    android:text="@string/hint_program_value_underflow_wrap"/>
 
                 <RadioButton
                     android:id="@+id/value_under_cap_checkbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/program_underflow_cap_hint"/>
+                    android:text="@string/hint_program_value_underflow_cap"/>
             </RadioGroup>
 
         </RelativeLayout>

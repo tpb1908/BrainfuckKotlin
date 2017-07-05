@@ -5,8 +5,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.support.annotation.ColorInt
 import android.support.annotation.StringRes
-import android.support.annotation.UiThread
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.SpannableString
@@ -28,13 +28,6 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
 
     companion object {
 
-        fun createIntent(context: Context, id: Long, startImmediately: Boolean = false): Intent {
-            val intent = Intent(context, Runner::class.java)
-            intent.putExtra(context.getString(R.string.extra_program_id), id)
-            intent.putExtra(context.getString(R.string.extra_start_immediately), startImmediately)
-            return intent
-        }
-
         fun createIntent(context: Context, program: Program, startImmediately: Boolean = false): Intent {
             val intent = Intent(context, Runner::class.java)
             intent.putExtra(context.getString(R.string.parcel_program), program)
@@ -43,11 +36,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         }
 
         fun isValidIntent(context: Context, intent: Intent?): Boolean {
-            return intent != null && (
-                            intent.extras.containsKey(context.getString(R.string.extra_program_id))
-                                    ||
-                            intent.extras.containsKey(context.getString(R.string.parcel_program))
-                    )
+            return intent != null && intent.extras.containsKey(context.getString(R.string.parcel_program))
         }
 
     }
@@ -120,7 +109,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         }
 
         dump_button.setOnClickListener {
-            outputMessage(String.format(getString(R.string.program_debug_format,
+            outputMessage(String.format(getString(R.string.message_debug_format,
                     interpreter.pos, interpreter.pointer, interpreter.inStream.toString(), interpreter.getMemoryDump())))
         }
 
@@ -166,10 +155,12 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         }
     }
 
-    private fun outputMessage(message: SpannableString) {
+    private fun outputMessage(message: String, @ColorInt color: Int) {
         runOnUiThread {
+            val span = SpannableString(message)
+            span.setSpan(ForegroundColorSpan(color), 0, span.length, 0)
             output.append("\n")
-            output.append(message)
+            output.append(span)
             output.append("\n")
         }
     }
@@ -177,9 +168,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
     override fun error(pos: Int, error: String) {
         interpreter.stop()
         runOnUiThread {
-            val message = SpannableString(String.format(getString(R.string.message_error, pos, error)))
-            message.setSpan(ForegroundColorSpan(Color.RED), 0, message.length, 0)
-            outputMessage(message)
+            outputMessage(String.format(getString(R.string.message_error, pos, error)), Color.RED)
         }
     }
 
@@ -187,18 +176,14 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         error(pos, getString(error))
     }
 
-    @UiThread override fun breakpoint() {
+    override fun breakpoint() {
         pause()
-        val message = SpannableString(getString(R.string.message_hit_breakpoint))
-        message.setSpan(ForegroundColorSpan(Color.YELLOW), 0, message.length, 0)
-        outputMessage(message)
+        outputMessage(getString(R.string.message_hit_breakpoint), Color.YELLOW)
     }
 
-    @UiThread override fun getInput() {
+    override fun getInput() {
         runOnUiThread {
-            val prompt = SpannableString(getString(R.string.prompt_input))
-            prompt.setSpan(ForegroundColorSpan(Color.GREEN), 0, prompt.length, 0)
-            outputMessage(prompt)
+            outputMessage(getString(R.string.message_input), Color.GREEN)
             input_layout.visibility = View.VISIBLE
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.toggleSoftInputFromWindow(input_edittext.applicationWindowToken, InputMethodManager.SHOW_FORCED, 0)
@@ -206,15 +191,13 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         }
     }
 
-    @UiThread override fun complete() {
-        val finished = SpannableString(getString(R.string.message_complete))
-        finished.setSpan(ForegroundColorSpan(Color.GREEN), 0, finished.length, 0)
-        outputMessage(finished)
+    override fun complete() {
+        outputMessage(getString(R.string.message_complete), Color.GREEN)
         interpreter.setPaused(true)
         setPausedUi()
     }
 
-    fun togglePause() {
+    private fun togglePause() {
         if (interpreter.isPaused()) {
             play()
         } else {
@@ -222,34 +205,30 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         }
     }
 
-    private fun pause() {
-        interpreter.setPaused(true)
-        setPausedUi()
-        val sp = SpannableString(getString(R.string.text_paused))
-        sp.setSpan(ForegroundColorSpan(Color.YELLOW), 0, sp.length, 0)
-        outputMessage(sp)
-    }
-
-
-    @UiThread private fun setPausedUi() {
-        runOnUiThread {
-            play_pause_button.setImageResource(R.drawable.ic_play_arrow_white)
-            play_pause_label.setText(R.string.label_play)
-        }
-    }
-
     private fun play() {
         interpreter.setPaused(false)
         setPlayingUi()
-        val sp = SpannableString(getString(R.string.text_unpaused))
-        sp.setSpan(ForegroundColorSpan(Color.GREEN), 0, sp.length, 0)
-        outputMessage(sp)
+        outputMessage(getString(R.string.message_unpaused), Color.GREEN)
     }
 
-    @UiThread private fun setPlayingUi() {
+    private fun pause() {
+        interpreter.setPaused(true)
+        setPausedUi()
+        outputMessage(getString(R.string.message_paused), Color.YELLOW)
+    }
+
+    private fun setPlayingUi() {
         runOnUiThread {
             play_pause_button.setImageResource(R.drawable.ic_pause_white)
             play_pause_label.setText(R.string.label_pause)
+        }
+    }
+
+
+    private fun setPausedUi() {
+        runOnUiThread {
+            play_pause_button.setImageResource(R.drawable.ic_play_arrow_white)
+            play_pause_label.setText(R.string.label_play)
         }
     }
 
