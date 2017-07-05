@@ -7,6 +7,7 @@ import com.tpb.brainfuck.db.*
 import com.tpb.brainfuck.occurrencesOf
 import java.lang.*
 import java.util.*
+import java.util.concurrent.LinkedBlockingQueue
 
 /**
  * Created by theo on 02/07/17.
@@ -17,7 +18,8 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
         shouldUseBreakpoints = useBreakPoints
     }
 
-    private var mem: IntArray = kotlin.IntArray(program.memoryCapacity)
+    var mem: IntArray = kotlin.IntArray(program.memoryCapacity)
+        private set
     var pos: Int = 0
         private set
     var pointer: Int = 0
@@ -28,19 +30,19 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
     private var shouldUseBreakpoints = true
     @Volatile private var stopRequested = false
     var complete = false
-    var inStream = Stack<Int>()
+    var inQueue = LinkedBlockingQueue<Int>()
         private set
 
     init {
         if (program.input.isNotEmpty()) {
-            program.input.split(",").map { it.trim() }.mapTo(inStream, {Integer.parseInt(it)})
+            program.input.split(",").map { it.trim() }.mapTo(inQueue, { Integer.parseInt(it) })
         }
     }
 
     override fun run() {
         if (checkProgram()) {
             while (pos < program.source.length) {
-                if (stopRequested) return
+                if (stopRequested || complete) return
                 if (paused || waitingForInput) {
                     try {
                         Thread.sleep(100)
@@ -53,6 +55,11 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
             complete = true
             io.complete()
         }
+    }
+
+    fun play() {
+        paused = false
+        run()
     }
 
     private fun checkProgram(): Boolean {
@@ -178,8 +185,8 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
                 io.output(mem[pointer].toChar().toString())
             }
             ',' -> {
-                if (inStream.isNotEmpty()) {
-                    mem[pointer] = inStream.pop()
+                if (inQueue.isNotEmpty()) {
+                    mem[pointer] = inQueue.take()
                 } else {
                     waitingForInput = true
                     io.getInput()

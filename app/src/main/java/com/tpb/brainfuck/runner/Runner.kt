@@ -113,7 +113,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
 
         dump_button.setOnClickListener {
             outputMessage(String.format(getString(R.string.message_debug_format,
-                    interpreter.pos, interpreter.pointer, interpreter.inStream.toString(), interpreter.getMemoryDump())))
+                    interpreter.pos, interpreter.pointer, interpreter.inQueue.toString(), interpreter.getMemoryDump())))
         }
 
         breakpoint_button.setOnClickListener {
