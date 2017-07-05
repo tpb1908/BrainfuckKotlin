@@ -1,8 +1,6 @@
 package com.tpb.brainfuck
 
-import com.tpb.brainfuck.db.PointerOverflowBehaviour
-import com.tpb.brainfuck.db.PointerUnderflowBehaviour
-import com.tpb.brainfuck.db.Program
+import com.tpb.brainfuck.db.*
 import com.tpb.brainfuck.runner.Interpreter
 import org.junit.Assert.*
 import org.junit.Before
@@ -72,6 +70,13 @@ class InterpreterTest : Interpreter.InterpreterIO {
         input.add('i')
         runWithSource(">>>,>>>")
 
+        assertTrue(inputCalled)
+    }
+
+    @Test fun testInputCalledAfterInputQueueEmptied() {
+        input.add('i')
+        inter = Interpreter(this, Program(source = ",,,,,,", input = "1,2,3,4,5"))
+        inter?.play()
         assertTrue(inputCalled)
     }
 
@@ -151,6 +156,50 @@ class InterpreterTest : Interpreter.InterpreterIO {
 
         assertEquals((inter?.mem?.size ?: 0) - 1 , inter?.pointer)
     }
+
+    @Test fun testValueOverflowError() {
+        inter = Interpreter(this, Program(source = "+++++", maxVal = 3))
+        inter?.play()
+
+        assertEquals(R.string.error_value_overflow, errorResource)
+    }
+
+    @Test fun testValueOverflowCap() {
+        inter = Interpreter(this, Program(source = "+++++", maxVal = 3, valueOverflowBehaviour = ValueOverflowBehaviour.CAP))
+        inter?.play()
+
+        assertEquals(inter?.program?.maxVal, inter?.mem?.first())
+    }
+
+    @Test fun testValueOverflowWrap() {
+        inter = Interpreter(this, Program(source = "++++", maxVal = 3, valueOverflowBehaviour = ValueOverflowBehaviour.WRAP))
+        inter?.play()
+
+        assertEquals(inter?.program?.minVal, inter?.mem?.first())
+    }
+
+    @Test fun testValueUnderflowError() {
+        inter = Interpreter(this, Program(source = "-----", minVal = -1))
+        inter?.play()
+
+        assertEquals(R.string.error_value_underflow, errorResource)
+    }
+
+    @Test fun testValueUnderflowCap() {
+        inter = Interpreter(this, Program(source = "--", minVal = -1, valueUnderflowBehaviour = ValueUnderflowBehaviour.CAP))
+        inter?.play()
+
+        assertEquals(inter?.program?.minVal, inter?.mem?.first())
+    }
+
+    @Test fun testValueUnderflowWrap() {
+        inter = Interpreter(this, Program(source = "--", minVal = -1, valueUnderflowBehaviour = ValueUnderflowBehaviour.WRAP))
+        inter?.play()
+
+        assertEquals(inter?.program?.maxVal, inter?.mem?.first())
+    }
+
+
 
     private fun runWithSource(source: String) {
         inter = Interpreter(this, Program(source = source))
