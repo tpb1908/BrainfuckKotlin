@@ -10,6 +10,8 @@
     <string name="menu_item_dark_theme">Dark theme</string>
     <string name="menu_item_restore_defaults">Restore defaults</string>
 
+    <string name="action_undo">UNDO</string>
+
     <string name="decrement"> &lt; </string>
     <string name="increment"> &gt;</string>
     <string name="plus">+</string>
@@ -44,6 +46,7 @@
     <string name="message_paused">Paused</string>
     <string name="message_unpaused">Unpaused</string>
     <string name="message_debug_format">Program position: %1$d\nPointer position: %2$d\nInput: %3$s\nMemory: %4$s</string>
+    <string name="message_deleted">Deleted</string>
 
     <string name="label_breakpoint_ignore_button">Ignore</string>
     <string name="label_breakpoint_break_button">Break</string>

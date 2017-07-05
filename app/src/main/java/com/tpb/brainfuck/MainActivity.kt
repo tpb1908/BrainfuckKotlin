@@ -64,8 +64,10 @@ class MainActivity : AppCompatActivity(), ProgramAdapter.ProgramTouchHandler {
 
     override fun remove(program: Program) {
         thread { Application.db.programDao().delete(program) }
-        Snackbar.make(coordinator, "Deleted", Snackbar.LENGTH_LONG)
-                .setAction("UNDO") { thread { Application.db.programDao().insert(program) } }
+        Snackbar.make(coordinator, getString(R.string.message_deleted), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.action_undo)) {
+                    thread { Application.db.programDao().insert(program) }
+                }
                 .show()
     }
 }

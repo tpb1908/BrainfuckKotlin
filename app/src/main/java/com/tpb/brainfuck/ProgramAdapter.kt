@@ -10,7 +10,8 @@ import android.widget.TextView
 import com.tpb.brainfuck.db.Program
 import com.tpb.brainfuck.db.ProgramDao
 import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.android.synthetic.main.program_card.view.*
+import kotlinx.android.synthetic.main.card_program.*
+import kotlinx.android.synthetic.main.card_program.view.*
 import java.util.*
 
 /**
@@ -51,7 +52,7 @@ class ProgramAdapter(dao: ProgramDao, val handler: ProgramTouchHandler) : Recycl
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProgramHolder {
-        return ProgramHolder(LayoutInflater.from(parent.context).inflate(R.layout.program_card, parent, false))
+        return ProgramHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_program, parent, false))
     }
 
     override fun onBindViewHolder(holder: ProgramHolder, position: Int) {
