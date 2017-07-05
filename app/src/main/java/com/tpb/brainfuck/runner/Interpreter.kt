@@ -1,8 +1,10 @@
-package com.tpb.brainfuck
+package com.tpb.brainfuck.runner
 
 import android.support.annotation.StringRes
 import android.util.SparseIntArray
+import com.tpb.brainfuck.R
 import com.tpb.brainfuck.db.*
+import com.tpb.brainfuck.occurrencesOf
 import java.lang.*
 import java.util.*
 
@@ -212,7 +214,7 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
                 if (value != last || i == 0) {
                     b.append(i)
                 } else {
-                    b.append(lastDiffPos).append("..").append(i)
+                    b.append(lastDiffPos).append("build/generated/source/aidl/androidTest").append(i)
                 }
                 b.append(" = ").append(value).append(", ")
                 lastDiffPos = i + 1

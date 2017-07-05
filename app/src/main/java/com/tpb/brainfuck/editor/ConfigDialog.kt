@@ -1,4 +1,4 @@
-package com.tpb.brainfuck
+package com.tpb.brainfuck.editor
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
 import android.view.View
 import android.widget.*
+import com.tpb.brainfuck.R
 import com.tpb.brainfuck.db.*
 import java.lang.Exception
 
@@ -198,12 +199,12 @@ class ConfigDialog : DialogFragment() {
             dialog.program = program
         }
 
-        fun setListener(listener: ConfigDialogListener): ConfigDialog.Builder {
+        fun setListener(listener: ConfigDialogListener): Builder {
             dialog.listener = listener
             return this
         }
 
-        fun setType(type: ConfigDialogType): ConfigDialog.Builder {
+        fun setType(type: ConfigDialogType): Builder {
             dialog.type = type
             return this
         }

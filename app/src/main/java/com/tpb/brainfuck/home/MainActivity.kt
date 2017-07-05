@@ -1,4 +1,4 @@
-package com.tpb.brainfuck
+package com.tpb.brainfuck.home
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -7,7 +7,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.tpb.brainfuck.*
 import com.tpb.brainfuck.db.Program
+import com.tpb.brainfuck.editor.Editor
+import com.tpb.brainfuck.runner.Runner
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.concurrent.thread
 

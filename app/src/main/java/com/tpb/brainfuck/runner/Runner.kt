@@ -1,4 +1,4 @@
-package com.tpb.brainfuck
+package com.tpb.brainfuck.runner
 
 import android.content.Context
 import android.content.Intent
@@ -14,6 +14,9 @@ import android.text.style.ForegroundColorSpan
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import com.tpb.brainfuck.Application
+import com.tpb.brainfuck.R
+import com.tpb.brainfuck.addSimpleTextChangedListener
 import com.tpb.brainfuck.db.Program
 import kotlinx.android.synthetic.main.activity_runner.*
 

@@ -1,4 +1,4 @@
-package com.tpb.brainfuck
+package com.tpb.brainfuck.editor
 
 import android.content.Context
 import android.content.Intent
@@ -8,8 +8,10 @@ import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
+import com.tpb.brainfuck.*
 import com.tpb.brainfuck.db.Program
 import com.tpb.brainfuck.db.ProgramDao
+import com.tpb.brainfuck.runner.Runner
 import kotlinx.android.synthetic.main.activity_editor.*
 import kotlin.concurrent.thread
 

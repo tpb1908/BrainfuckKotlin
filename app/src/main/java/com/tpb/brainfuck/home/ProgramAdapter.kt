@@ -1,4 +1,4 @@
-package com.tpb.brainfuck
+package com.tpb.brainfuck.home
 
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import com.tpb.brainfuck.R
 import com.tpb.brainfuck.db.Program
 import com.tpb.brainfuck.db.ProgramDao
 import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.android.synthetic.main.card_program.*
 import kotlinx.android.synthetic.main.card_program.view.*
 import java.util.*
 
