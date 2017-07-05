@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
+import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import com.tpb.brainfuck.db.Program
 import com.tpb.brainfuck.db.ProgramDao
@@ -136,6 +137,12 @@ class Editor : AppCompatActivity(), ConfigDialog.ConfigDialogListener {
     override fun onNegativeClick(dialog: DialogFragment, launchType: ConfigDialog.ConfigDialogType) {
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == android.R.id.home) {
+            onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     companion object {
 

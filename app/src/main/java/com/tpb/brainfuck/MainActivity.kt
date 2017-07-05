@@ -50,6 +50,8 @@ class MainActivity : AppCompatActivity(), ProgramAdapter.ProgramTouchHandler {
         if (item?.itemId == R.id.menu_item_switch_theme) {
             Application.toggleTheme(this)
             recreate()
+        } else if (item?.itemId == android.R.id.home) {
+            onBackPressed()
         }
 
         return super.onOptionsItemSelected(item)

@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.tpb.brainfuck.db.Program
@@ -260,6 +261,13 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == android.R.id.home) {
+            onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun finish() {
