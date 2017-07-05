@@ -214,7 +214,7 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
                 if (value != last || i == 0) {
                     b.append(i)
                 } else {
-                    b.append(lastDiffPos).append("build/generated/source/aidl/androidTest").append(i)
+                    b.append(lastDiffPos).append("..").append(i)
                 }
                 b.append(" = ").append(value).append(", ")
                 lastDiffPos = i + 1
