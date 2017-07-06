@@ -170,6 +170,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
 
     override fun error(pos: Int, error: String) {
         interpreter.stop()
+        pause()
         runOnUiThread {
             outputMessage(String.format(getString(R.string.message_error, pos, error)), Color.RED)
         }

@@ -17,6 +17,7 @@ class Application : Application() {
     companion object {
         lateinit var db: Database
         @StyleRes var themeId: Int = R.style.AppTheme
+            private set
 
         fun toggleTheme(context: Context) {
             if (themeId == R.style.AppTheme) {
@@ -158,8 +159,9 @@ class Application : Application() {
     override fun onCreate() {
         super.onCreate()
         db = Room.databaseBuilder(this, Database::class.java, "bfdb")
-                .addMigrations(ProgramMigrations.Migration_1_2, ProgramMigrations.Migration_2_3)
+                .addMigrations(ProgramMigrations.Migration_1_2, ProgramMigrations.Migration_2_3, ProgramMigrations.Migration_3_4)
                 .build()
+
         val sp = getSharedPreferences(applicationContext.packageName, Context.MODE_PRIVATE)
         if (sp.getBoolean("firstRun", true)) {
             sp.edit().putBoolean("firstRun", false).apply()

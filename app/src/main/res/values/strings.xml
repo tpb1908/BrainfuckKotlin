@@ -89,6 +89,8 @@
     <string name="hint_program_pointer_overflow_expand">Expand on pointer overflow</string>
     <string name="hint_program_pointer_underflow_error">Error on pointer underflow</string>
     <string name="hint_program_pointer_underflow_wrap">Wrap pointer on underflow</string>
+    <string name="hint_program_keyboard_input">Keyboard input</string>
+    <string name="hint_program_zero_input">Zero input</string>
     <string name="hint_program_source">Source</string>
     <string name="hint_program_input">Input</string>
 

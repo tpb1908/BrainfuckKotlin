@@ -7,7 +7,6 @@ import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import android.test.suitebuilder.annotation.LargeTest
 import android.view.View
 import android.widget.EditText
 import com.tpb.brainfuck.R
@@ -18,13 +17,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@LargeTest
 @RunWith(AndroidJUnit4::class)
 class EditorKeyboardLockTest {
 
     @JvmField @Rule
-    var mActivityTestRule = ActivityTestRule(
-            Editor::class.java)
+    var mActivityTestRule = ActivityTestRule(Editor::class.java)
 
     @Test
     fun testEditorKeyboardLock() {

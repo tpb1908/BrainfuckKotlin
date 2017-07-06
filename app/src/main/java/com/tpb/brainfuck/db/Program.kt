@@ -19,7 +19,8 @@ import io.mironov.smuggler.AutoParcelable
         var valueOverflowBehaviour: ValueOverflowBehaviour = ValueOverflowBehaviour.ERROR,
         var pointerUnderflowBehaviour: PointerUnderflowBehaviour = PointerUnderflowBehaviour.ERROR,
         var pointerOverflowBehaviour: PointerOverflowBehaviour = PointerOverflowBehaviour.ERROR,
-        var input: String = ""
+        var input: String = "",
+        var emptyInputBehaviour: EmptyInputBehaviour = EmptyInputBehaviour.KEYBOARD
 
 
 ) : AutoParcelable
@@ -39,4 +40,8 @@ enum class PointerOverflowBehaviour {
 
 enum class PointerUnderflowBehaviour {
     ERROR, WRAP
+}
+
+enum class EmptyInputBehaviour {
+    KEYBOARD, ZERO
 }

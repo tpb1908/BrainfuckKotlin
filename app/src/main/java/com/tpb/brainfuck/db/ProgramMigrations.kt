@@ -21,6 +21,12 @@ class ProgramMigrations {
                 database.execSQL("ALTER TABLE program ADD input VARCHAR;")
             }
         }
+
+        val Migration_3_4 = object: Migration(3, 4) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE program ADD emptyInputBehaviour VARCHAR;")
+            }
+        }
     }
 
 }

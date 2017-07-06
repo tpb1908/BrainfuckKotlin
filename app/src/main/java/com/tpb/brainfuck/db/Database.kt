@@ -8,7 +8,7 @@ import android.arch.persistence.room.TypeConverters
  * Created by theo on 30/06/17.
  */
 
-@Database(entities = arrayOf(Program::class), version = 3)
+@Database(entities = arrayOf(Program::class), version = 4)
 @TypeConverters(EnumConverters::class)
 abstract class Database : RoomDatabase() {
 

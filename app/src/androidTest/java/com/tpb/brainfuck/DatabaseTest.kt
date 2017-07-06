@@ -105,7 +105,7 @@ class DatabaseTest {
         }
     }
 
-    @Test fun state9_testUpdateOfProgram() {
+    @Test fun stage9_testUpdateOfProgram() {
         val p = Program(name = "Initial name", source = "Some source", memoryCapacity= 5000, pointerOverflowBehaviour = PointerOverflowBehaviour.WRAP)
         thread {
             p.uid = dao.insert(p)

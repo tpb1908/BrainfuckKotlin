@@ -6,8 +6,8 @@ import android.arch.persistence.room.TypeConverter
  * Created by theo on 02/07/17.
  */
 class EnumConverters {
-    @TypeConverter
-    fun fromValueUnderflowString(value: String): ValueUnderflowBehaviour {
+
+    @TypeConverter fun fromValueUnderflowString(value: String): ValueUnderflowBehaviour {
         return when (value) {
             "wrap" -> ValueUnderflowBehaviour.WRAP
             "cap" -> ValueUnderflowBehaviour.CAP
@@ -15,8 +15,7 @@ class EnumConverters {
         }
     }
 
-    @TypeConverter
-    fun toValueUnderflowString(behaviour: ValueUnderflowBehaviour): String {
+    @TypeConverter fun toValueUnderflowString(behaviour: ValueUnderflowBehaviour): String {
         return when (behaviour) {
             ValueUnderflowBehaviour.WRAP -> "wrap"
             ValueUnderflowBehaviour.CAP -> "cap"
@@ -25,8 +24,7 @@ class EnumConverters {
 
     }
 
-    @TypeConverter
-    fun fromValueOverflowString(value: String): ValueOverflowBehaviour {
+    @TypeConverter fun fromValueOverflowString(value: String): ValueOverflowBehaviour {
         return when (value) {
             "wrap" -> ValueOverflowBehaviour.WRAP
             "cap" -> ValueOverflowBehaviour.CAP
@@ -34,8 +32,7 @@ class EnumConverters {
         }
     }
 
-    @TypeConverter
-    fun toValueOverflowString(behaviour: ValueOverflowBehaviour): String {
+    @TypeConverter fun toValueOverflowString(behaviour: ValueOverflowBehaviour): String {
         return when (behaviour) {
             ValueOverflowBehaviour.WRAP -> "wrap"
             ValueOverflowBehaviour.CAP -> "cap"
@@ -43,24 +40,21 @@ class EnumConverters {
         }
     }
 
-    @TypeConverter
-    fun fromPointerUnderflowString(value: String): PointerUnderflowBehaviour {
+    @TypeConverter fun fromPointerUnderflowString(value: String): PointerUnderflowBehaviour {
         return when (value) {
             "wrap" -> PointerUnderflowBehaviour.WRAP
             else -> PointerUnderflowBehaviour.ERROR
         }
     }
 
-    @TypeConverter
-    fun toPointerUnderflowString(behaviour: PointerUnderflowBehaviour): String {
+    @TypeConverter fun toPointerUnderflowString(behaviour: PointerUnderflowBehaviour): String {
         return when (behaviour) {
             PointerUnderflowBehaviour.WRAP -> "wrap"
             else -> "error"
         }
     }
 
-    @TypeConverter
-    fun toPointerOverflowString(behaviour: PointerOverflowBehaviour): String {
+    @TypeConverter fun toPointerOverflowString(behaviour: PointerOverflowBehaviour): String {
         return when (behaviour) {
             PointerOverflowBehaviour.WRAP -> "wrap"
             PointerOverflowBehaviour.EXPAND -> "expand"
@@ -68,12 +62,25 @@ class EnumConverters {
         }
     }
 
-    @TypeConverter
-    fun fromPointerOverflowString(value: String): PointerOverflowBehaviour {
+    @TypeConverter fun fromPointerOverflowString(value: String): PointerOverflowBehaviour {
         return when (value) {
             "wrap" -> PointerOverflowBehaviour.WRAP
             "expand" -> PointerOverflowBehaviour.EXPAND
             else -> PointerOverflowBehaviour.ERROR
+        }
+    }
+
+    @TypeConverter fun fromEmptyInputString(value: String): EmptyInputBehaviour {
+        return when (value) {
+            "zero" -> EmptyInputBehaviour.ZERO
+            else -> EmptyInputBehaviour.KEYBOARD
+        }
+    }
+
+    @TypeConverter fun toEmptyInputString(behavior: EmptyInputBehaviour): String {
+        return when (behavior) {
+            EmptyInputBehaviour.ZERO -> "zero"
+            else -> "keyboard"
         }
     }
 }

@@ -137,10 +137,31 @@
             </android.support.design.widget.TextInputLayout>
 
             <RadioGroup
-                android:id="@+id/pointer_overflow_behaviour"
+                android:id="@+id/empty_input_behaviour"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/min_wrapper"
+                android:layout_marginTop="16dp">
+
+                <RadioButton
+                    android:id="@+id/keyboard_input_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hint_program_keyboard_input"/>
+
+                <RadioButton
+                    android:id="@+id/zero_input_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hint_program_zero_input"/>
+
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/pointer_overflow_behaviour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/empty_input_behaviour"
                 android:layout_marginTop="16dp">
 
                 <RadioButton

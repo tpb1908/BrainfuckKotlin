@@ -24,7 +24,7 @@ class ConfigDialog : DialogFragment() {
     @SuppressLint("SetTextI18n")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
-        val view = activity.layoutInflater.inflate(R.layout.dialog_settings, null)
+        val view = activity.layoutInflater.inflate(R.layout.dialog_config, null)
         builder.setView(view)
         type = arguments?.getSerializable(getString(R.string.extra_config_type)) as? ConfigDialogType ?: type
         if (type == ConfigDialogType.RUN) {
@@ -64,6 +64,10 @@ class ConfigDialog : DialogFragment() {
             PointerUnderflowBehaviour.ERROR -> view.findViewById<RadioButton>(R.id.pointer_under_error_checkbox).isChecked = true
             PointerUnderflowBehaviour.WRAP -> view.findViewById<RadioButton>(R.id.pointer_under_wrap_checkbox).isChecked = true
         }
+        when (program.emptyInputBehaviour) {
+            EmptyInputBehaviour.KEYBOARD -> view.findViewById<RadioButton>(R.id.keyboard_input_checkbox).isChecked = true
+            EmptyInputBehaviour.ZERO -> view.findViewById<RadioButton>(R.id.zero_input_checkbox).isChecked = true
+        }
 
         addListeners(view)
 
@@ -71,6 +75,14 @@ class ConfigDialog : DialogFragment() {
     }
 
     private fun addListeners(view: View) {
+
+
+        view.findViewById<RadioGroup>(R.id.empty_input_behaviour).setOnCheckedChangeListener { _, i ->
+            program.emptyInputBehaviour = when (i) {
+                R.id.keyboard_input_checkbox -> EmptyInputBehaviour.KEYBOARD
+                else -> EmptyInputBehaviour.ZERO
+            }
+        }
         view.findViewById<RadioGroup>(R.id.pointer_overflow_behaviour).setOnCheckedChangeListener { _, i ->
             program.pointerOverflowBehaviour = when (i) {
                 R.id.pointer_over_expand_checkbox -> PointerOverflowBehaviour.EXPAND

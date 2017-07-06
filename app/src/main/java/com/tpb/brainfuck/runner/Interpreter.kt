@@ -187,9 +187,11 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
             ',' -> {
                 if (inQueue.isNotEmpty()) {
                     mem[pointer] = inQueue.take()
-                } else {
+                } else if (program.emptyInputBehaviour == EmptyInputBehaviour.KEYBOARD){
                     waitingForInput = true
                     io.getInput()
+                } else {
+                    mem[pointer] = 0
                 }
             }
             '[' -> {
