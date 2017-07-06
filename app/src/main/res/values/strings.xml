@@ -89,6 +89,16 @@
     <string name="hint_program_pointer_overflow_expand">Expand on pointer overflow</string>
     <string name="hint_program_pointer_underflow_error">Error on pointer underflow</string>
     <string name="hint_program_pointer_underflow_wrap">Wrap pointer on underflow</string>
+    <string name="hint_program_source">Source</string>
+    <string name="hint_program_input">Input</string>
 
-
+    <string name="description_keyboard_lock">Lock or unlock onscreen keyboard</string>
+    <string name="description_save">Save the program and its configuration</string>
+    <string name="description_run">Run the program after setting its configuration</string>
+    <string name="description_quick_run">Run the program</string>
+    <string name="description_play_pause">Play or pause the program</string>
+    <string name="description_step">Step one character through the program</string>
+    <string name="description_restart">Restart the program</string>
+    <string name="description_debug_dump">Display debug information</string>
+    <string name="description_breakpoint">Enable or disable breakpoints</string>
 </resources>

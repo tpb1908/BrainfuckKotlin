@@ -4,7 +4,6 @@ import android.app.Application
 import android.arch.persistence.room.Room
 import android.content.Context
 import android.support.annotation.StyleRes
-import android.support.annotation.VisibleForTesting
 import com.tpb.brainfuck.db.Database
 import com.tpb.brainfuck.db.Program
 import com.tpb.brainfuck.db.ProgramMigrations

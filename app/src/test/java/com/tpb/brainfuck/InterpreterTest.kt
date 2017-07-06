@@ -106,7 +106,7 @@ class InterpreterTest : Interpreter.InterpreterIO {
         inter?.performStep()
         assertEquals(3, output?.length)
         inter?.performStep()
-        System.out.println("Input called? ${inputCalled}")
+        System.out.println("Input called? $inputCalled")
         assertTrue(inputCalled)
     }
 
@@ -215,7 +215,7 @@ class InterpreterTest : Interpreter.InterpreterIO {
     //Interface methods for Interpreter
 
     override fun output(out: String) {
-        System.out.println("Output: ${out}")
+        System.out.println("Output: $out")
         if (output == null) {
             output = out
         } else {
@@ -224,14 +224,14 @@ class InterpreterTest : Interpreter.InterpreterIO {
     }
 
     override fun error(pos: Int, error: String) {
-        System.out.println("Error at ${pos} with message ${error}")
+        System.out.println("Error at $pos with message $error")
         errorPosition = pos
         errorString = error
         inter?.stop()
     }
 
     override fun error(pos: Int, error: Int) {
-        System.out.println("Error at ${pos} with resId ${error}")
+        System.out.println("Error at $pos with resId $error")
         errorPosition = pos
         errorResource = error
         inter?.stop()

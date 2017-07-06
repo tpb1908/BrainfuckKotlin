@@ -1,5 +1,6 @@
 package com.tpb.brainfuck
 
+import android.content.Context
 import android.support.test.InstrumentationRegistry
 import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
@@ -26,7 +27,7 @@ class DatabaseTest {
 
 
 
-    val context = InstrumentationRegistry.getTargetContext()
+    val context: Context = InstrumentationRegistry.getTargetContext()
     val dao = Application.db.programDao()
 
 
