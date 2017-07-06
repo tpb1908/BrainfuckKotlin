@@ -1,4 +1,4 @@
-# Brainfuck
+# Brainfuck [![Build Status](https://travis-ci.org/tpb1908/BrainfuckKotlin.svg?branch=master)](https://travis-ci.org/tpb1908/BrainfuckKotlin)
 
 A Brainfuck interpreter for Android, written in Kotlin.
 
