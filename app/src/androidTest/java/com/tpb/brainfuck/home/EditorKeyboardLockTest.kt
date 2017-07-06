@@ -27,7 +27,7 @@ class EditorKeyboardLockTest {
             Editor::class.java)
 
     @Test
-    fun editorKeyboardLockTest() {
+    fun testEditorKeyboardLock() {
 
         val editor = mActivityTestRule.activity.findViewById<EditText>(R.id.editor)
         val initialHeight = editor.height

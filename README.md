@@ -24,3 +24,7 @@ A Brainfuck interpreter for Android, written in Kotlin.
 	- Debug information
 - Light and dark themes	
 
+| | |
+| --- | --- |
+| ![Main](./screenshots/home.png) | ![Main_dark](./screenshots/home_dark.png) |
+| ![Editor](./screenshots/editor.png) | ![Runner](./screenshots/runner.png) |

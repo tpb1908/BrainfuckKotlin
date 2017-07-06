@@ -3,12 +3,15 @@ package com.tpb.brainfuck.editor
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Looper
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
-import com.tpb.brainfuck.*
+import com.tpb.brainfuck.Application
+import com.tpb.brainfuck.R
+import com.tpb.brainfuck.addSimpleTextChangedListener
 import com.tpb.brainfuck.db.Program
 import com.tpb.brainfuck.db.ProgramDao
 import com.tpb.brainfuck.runner.Runner
@@ -37,6 +40,7 @@ class Editor : AppCompatActivity(), ConfigDialog.ConfigDialogListener {
         val id = intent?.extras?.getLong(getString(R.string.parcel_program), -1) ?: -1
         if (id != -1L) {
             thread {
+                //Looper.prepare()
                 program = dao.getProgram(id)
                 editor.setText(program.source)
                 title = String.format(getString(R.string.title_editing), program.name)
