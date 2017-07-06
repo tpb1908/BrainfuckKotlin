@@ -237,7 +237,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
     }
 
     override fun onBackPressed() {
-        if (thread.isAlive) {
+        if (!interpreter.complete && thread.isAlive) {
             AlertDialog.Builder(this)
                     .setTitle(R.string.title_exit_dialog)
                     .setMessage(R.string.message_exit_running_program_dialog)
