@@ -29,7 +29,7 @@ android:
         - ".+"
 
 before_script:
-  - echo list targets
+  - android list targets
   - echo no | android create avd --force --name test --target android-22 --abi armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window -gpu off -no-boot-anim &
   - android-wait-for-emulator
