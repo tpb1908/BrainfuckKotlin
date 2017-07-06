@@ -124,7 +124,12 @@ class ConfigDialog : DialogFragment() {
             if (inputString.isNotEmpty()) {
                 try {
                     val ints = ArrayList<Int>()
-                    inputString.split(",").map { it.trim() }.mapTo(ints, {Integer.parseInt(it)})
+                    inputString.split(",").map { it.trim() }.mapTo(ints, {
+                        if (it.length == 1) {
+                            it.first().toInt()
+                        } else {
+                            Integer.parseInt(it)
+                        }})
                 } catch (e: Exception) {
                     error = true
                     view.findViewById<TextInputLayout>(R.id.input_stream_wrapper).error = getString(R.string.error_invalid_input)

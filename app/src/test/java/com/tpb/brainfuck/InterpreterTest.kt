@@ -83,7 +83,9 @@ class InterpreterTest : Interpreter.InterpreterIO {
     @Test fun testZeroInputWhenQueueEmptiedAndConfigSet() {
         inter = Interpreter(this, Program(source = ",,,,.", input = "1,2,3", emptyInputBehaviour = EmptyInputBehaviour.ZERO))
         repeat(3, { inter?.performStep() })
+
         assertFalse(inputCalled)
+
         inter?.performStep()
         inter?.performStep()
         assertEquals(0.toChar(), output?.first())

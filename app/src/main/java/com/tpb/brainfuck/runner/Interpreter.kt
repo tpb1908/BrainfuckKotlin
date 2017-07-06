@@ -35,7 +35,13 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
 
     init {
         if (program.input.isNotEmpty()) {
-            program.input.split(",").map { it.trim() }.mapTo(inQueue, { Integer.parseInt(it) })
+            program.input.split(",").map { it.trim() }.mapTo(inQueue, {
+                if (it.length == 1) {
+                    it.first().toInt()
+                } else {
+                    Integer.parseInt(it)
+                }
+            })
         }
     }
 
