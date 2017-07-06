@@ -39,7 +39,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_fast_forward_black"
+            android:src="@drawable/ic_fast_forward_themed"
             android:contentDescription="@string/description_quick_run"/>
 
     </RelativeLayout>

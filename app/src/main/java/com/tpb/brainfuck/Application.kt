@@ -16,8 +16,10 @@ class Application : Application() {
 
     companion object {
         lateinit var db: Database
-        @StyleRes var themeId: Int = R.style.AppTheme
+
+        var themeId: Int = R.style.AppTheme
             private set
+            @StyleRes get
 
         fun toggleTheme(context: Context) {
             if (themeId == R.style.AppTheme) {
