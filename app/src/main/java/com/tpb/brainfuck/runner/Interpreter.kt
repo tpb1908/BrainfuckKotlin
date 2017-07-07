@@ -127,7 +127,7 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
     }
 
     fun performStep(): Boolean {
-        if (pos < program.source.length) {
+        if (pos < program.source.length && !waitingForInput) {
             step()
             return true
         }
