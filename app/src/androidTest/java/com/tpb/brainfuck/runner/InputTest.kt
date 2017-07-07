@@ -19,7 +19,6 @@ import java.util.*
  * Created by theo on 07/07/17.
  */
 class InputTest {
-
     @JvmField @Rule
     var activityTestRule = ActivityTestRule(Runner::class.java, true, false)
 
