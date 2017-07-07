@@ -1,4 +1,4 @@
-package com.tpb.brainfuck.home
+package com.tpb.brainfuck.runner
 
 
 import android.content.Intent
@@ -12,7 +12,6 @@ import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import com.tpb.brainfuck.R
 import com.tpb.brainfuck.db.Program
-import com.tpb.brainfuck.runner.Runner
 import org.hamcrest.Matchers.allOf
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -41,7 +40,7 @@ class ConfirmCloseDialogTest {
         intent.putExtra("parcel_program", program)
     }
 
-    @Test fun confirmCloseDialogTest() {
+    @Test fun testConfirmCloseDialogShown() {
         activityTestRule.launchActivity(intent)
         onView(allOf<View>(withId(R.id.play_pause_button), isDisplayed()))
                 .perform(click())
@@ -52,7 +51,7 @@ class ConfirmCloseDialogTest {
         onView(withText("Confirm")).check(ViewAssertions.matches(isDisplayed()))
     }
 
-    @Test fun confirmCloseDialogCancel() {
+    @Test fun testConfirmCloseDialogCancel() {
         activityTestRule.launchActivity(intent)
         onView(allOf<View>(withId(R.id.play_pause_button), isDisplayed()))
                 .perform(click())
@@ -68,7 +67,7 @@ class ConfirmCloseDialogTest {
         assertFalse(activityTestRule.activity.isFinishing)
     }
 
-    @Test fun confirmCloseDialogOK() {
+    @Test fun testConfirmCloseDialogOK() {
         activityTestRule.launchActivity(intent)
         onView(allOf<View>(withId(R.id.play_pause_button), isDisplayed()))
                 .perform(click())

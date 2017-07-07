@@ -24,10 +24,9 @@ import kotlinx.android.synthetic.main.activity_runner.*
  * Created by theo on 01/07/17.
  */
 class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
-    lateinit var program: Program
-    lateinit var interpreter: Interpreter
-    lateinit var thread: Thread
-
+    private lateinit var program: Program
+    private lateinit var interpreter: Interpreter
+    private lateinit var thread: Thread
 
     companion object {
 
@@ -71,7 +70,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
     }
 
     private fun setTitle() {
-        if(program.name.isBlank()) {
+        if (program.name.isBlank()) {
             setTitle(R.string.title_runner)
         } else {
             title = String.format(getString(R.string.title_running), program.name)
@@ -141,7 +140,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         }
 
         if (intent?.extras?.getBoolean(getString(R.string.extra_start_immediately), false) ?: false) {
-            Handler().postDelayed( { startProgram() }, 60)
+            Handler().postDelayed({ startProgram() }, 60)
         }
 
     }
@@ -152,9 +151,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
 
     private fun outputMessage(message: String) {
         runOnUiThread {
-            output.append("\n")
-            output.append(message)
-            output.append("\n")
+            output.append("\n$message\n")
         }
     }
 
@@ -205,7 +202,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
         if (interpreter.isPaused()) {
             play()
         } else {
-           pause()
+            pause()
         }
     }
 
@@ -227,7 +224,6 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
             play_pause_label.setText(R.string.label_pause)
         }
     }
-
 
     private fun setPausedUi() {
         runOnUiThread {

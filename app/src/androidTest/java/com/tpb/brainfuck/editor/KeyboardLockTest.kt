@@ -1,4 +1,4 @@
-package com.tpb.brainfuck.home
+package com.tpb.brainfuck.editor
 
 
 import android.support.test.espresso.Espresso.onView
@@ -10,7 +10,6 @@ import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.widget.EditText
 import com.tpb.brainfuck.R
-import com.tpb.brainfuck.editor.Editor
 import org.hamcrest.Matchers.allOf
 import org.junit.Assert.assertTrue
 import org.junit.Rule
@@ -18,15 +17,14 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class EditorKeyboardLockTest {
+class KeyboardLockTest {
 
     @JvmField @Rule
-    var mActivityTestRule = ActivityTestRule(Editor::class.java)
+    var activityTestRule = ActivityTestRule(Editor::class.java)
 
-    @Test
-    fun testEditorKeyboardLock() {
+    @Test fun testEditorKeyboardLock() {
 
-        val editor = mActivityTestRule.activity.findViewById<EditText>(R.id.editor)
+        val editor = activityTestRule.activity.findViewById<EditText>(R.id.editor)
         val initialHeight = editor.height
 
         val appCompatEditText = onView(

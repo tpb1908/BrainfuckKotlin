@@ -62,7 +62,7 @@ class DatabaseTest {
         }
     }
 
-    @Test fun stage4_resetDatabase() {
+    @Test fun stage4_testResetDatabase() {
         thread {
             dao.deleteAllPrograms()
             dao.getAllPrograms().take(1).subscribe {

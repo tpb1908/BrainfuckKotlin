@@ -23,8 +23,7 @@ import org.junit.runner.RunWith
 class ToggleThemeTest {
 
     @JvmField @Rule
-    var mActivityTestRule = ActivityTestRule(
-            MainActivity::class.java)
+    var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
     @Test
     fun testThemeTogglePersistence() {
