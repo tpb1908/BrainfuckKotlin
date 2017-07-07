@@ -13,6 +13,7 @@ import com.tpb.brainfuck.R
 import com.tpb.brainfuck.addSimpleTextChangedListener
 import com.tpb.brainfuck.db.Program
 import com.tpb.brainfuck.db.ProgramDao
+import com.tpb.brainfuck.runner.Formatter
 import com.tpb.brainfuck.runner.Runner
 import kotlinx.android.synthetic.main.activity_editor.*
 import kotlin.concurrent.thread
@@ -76,6 +77,9 @@ class Editor : AppCompatActivity(), ConfigDialog.ConfigDialogListener {
             }
         }
 
+        format_code_button.setOnClickListener {
+            editor.setText(Formatter.format(editor.text.toString()))
+        }
 
         quick_run_button.setOnClickListener {
             program.source = editor.text.toString()
@@ -100,6 +104,8 @@ class Editor : AppCompatActivity(), ConfigDialog.ConfigDialogListener {
                     .build()
                     .show(supportFragmentManager, this::class.java.simpleName)
         }
+
+
 
         increment_button.setOnClickListener { dispatchKeyEvent(KeyEvent(0, ">", 0, 0)) }
         decrement_button.setOnClickListener { dispatchKeyEvent(KeyEvent(0, "<", 0, 0)) }

@@ -103,4 +103,5 @@
     <string name="description_restart">Restart the program</string>
     <string name="description_debug_dump">Display debug information</string>
     <string name="description_breakpoint">Enable or disable breakpoints</string>
+    <string name="description_format">Format code</string>
 </resources>

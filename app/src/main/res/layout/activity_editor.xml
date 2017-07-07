@@ -4,11 +4,11 @@
                 android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:id="@+id/toolbar">
+        android:elevation="4dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -18,42 +18,51 @@
                 android:id="@+id/lock_keyboard_button"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:src="@drawable/ic_lock_open_white"
-                android:background="@android:color/transparent"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
-                android:contentDescription="@string/description_keyboard_lock"/>
+                android:layout_alignParentTop="true"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/description_keyboard_lock"
+                android:src="@drawable/ic_lock_open_white"/>
+
+            <ImageButton
+                android:id="@+id/format_code_button"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_format_text_white"
+                android:contentDescription="@string/description_format"
+                android:layout_toEndOf="@+id/lock_keyboard_button"/>
 
             <ImageButton
                 android:id="@+id/save_button"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:src="@drawable/ic_save_white"
-                android:background="@android:color/transparent"
                 android:layout_alignParentTop="true"
                 android:layout_toStartOf="@+id/quick_run_button"
-                android:contentDescription="@string/description_save"/>
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/description_save"
+                android:src="@drawable/ic_save_white"/>
 
             <ImageButton
                 android:id="@+id/run_button"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:src="@drawable/ic_play_arrow_white"
-                android:background="@android:color/transparent"
-                android:layout_marginEnd="6dp"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:contentDescription="@string/description_run"/>
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="6dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/description_run"
+                android:src="@drawable/ic_play_arrow_white"/>
 
             <ImageButton
                 android:id="@+id/quick_run_button"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_fast_forward_white"
                 android:layout_alignParentTop="true"
                 android:layout_toStartOf="@+id/run_button"
-                android:contentDescription="@string/description_quick_run"/>
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/description_quick_run"
+                android:src="@drawable/ic_fast_forward_white"/>
 
         </RelativeLayout>
 
@@ -61,29 +70,29 @@
 
 
     <EditText
+        android:id="@+id/editor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:inputType="textMultiLine"
-        android:maxHeight="400dp"
-        android:gravity="top"
-        android:id="@+id/editor"
-        android:layout_below="@+id/toolbar"
         android:layout_above="@+id/quick_buttons"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar"
+        android:gravity="top"
+        android:hint="@string/hint_program_source"
         android:imeOptions="flagNoExtractUi"
-        android:hint="@string/hint_program_source"/>
+        android:inputType="textMultiLine"
+        android:maxHeight="400dp"/>
 
 
     <TableLayout
+        android:id="@+id/quick_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:stretchColumns="*"
-        android:id="@+id/quick_buttons"
-        android:layout_alignParentBottom="true">
+        android:layout_marginTop="16dp"
+        android:stretchColumns="*">
 
 
         <TableRow
@@ -91,88 +100,100 @@
             android:layout_height="match_parent">
 
             <Button
-                style="?android:attr/buttonStyleSmall"
-                android:text="@string/decrement"
                 android:id="@+id/decrement_button"
-                android:layout_column="0"/>
-            <Button
                 style="?android:attr/buttonStyleSmall"
-                android:text="@string/increment"
+                android:layout_column="0"
+                android:text="@string/decrement"/>
+
+            <Button
                 android:id="@+id/increment_button"
-                android:layout_column="1"/>
-            <Button
                 style="?android:attr/buttonStyleSmall"
-                android:text="@string/plus"
+                android:layout_column="1"
+                android:text="@string/increment"/>
+
+            <Button
                 android:id="@+id/plus_button"
-                android:layout_column="2"/>
-            <Button
                 style="?android:attr/buttonStyleSmall"
-                android:text="@string/minus"
+                android:layout_column="2"
+                android:text="@string/plus"/>
+
+            <Button
                 android:id="@+id/minus_button"
-                android:layout_column="3"/>
-            <Button
                 style="?android:attr/buttonStyleSmall"
-                android:text="@string/print"
+                android:layout_column="3"
+                android:text="@string/minus"/>
+
+            <Button
                 android:id="@+id/output_button"
-                android:layout_column="4"/>
-            <Button
                 style="?android:attr/buttonStyleSmall"
-                android:text="@string/input"
+                android:layout_column="4"
+                android:text="@string/print"/>
+
+            <Button
                 android:id="@+id/input"
-                android:layout_column="5"/>
-            <Button
                 style="?android:attr/buttonStyleSmall"
-                android:text="@string/start_loop"
+                android:layout_column="5"
+                android:text="@string/input"/>
+
+            <Button
                 android:id="@+id/start_loop_button"
-                android:layout_column="6"/>
+                style="?android:attr/buttonStyleSmall"
+                android:layout_column="6"
+                android:text="@string/start_loop"/>
 
 
         </TableRow>
 
         <TableRow
             android:layout_width="0dp">
+
             <Button
-                style="?android:attr/buttonStyleSmall"
-                android:text="@string/end_loop"
                 android:id="@+id/end_loop_button"
+                style="?android:attr/buttonStyleSmall"
                 android:layout_column="0"
-                />
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:text="@string/space"
-                android:id="@+id/space_button"
-                android:layout_column="1"
-                />
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:text="@string/backspace"
-                android:id="@+id/backspace_button"
-                android:layout_column="2"
-                />
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:text="@string/back"
-                android:id="@+id/backward_button"
-                android:layout_column="3"
-                />
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:text="@string/forward"
-                android:id="@+id/forward_button"
-                android:layout_column="4"
+                android:text="@string/end_loop"
                 />
 
             <Button
+                android:id="@+id/space_button"
                 style="?android:attr/buttonStyleSmall"
-                android:text="@string/enter"
-                android:id="@+id/enter_button"
-                android:layout_column="5"
+                android:layout_column="1"
+                android:text="@string/space"
                 />
+
             <Button
+                android:id="@+id/backspace_button"
                 style="?android:attr/buttonStyleSmall"
-                android:text="@string/breakpoint"
+                android:layout_column="2"
+                android:text="@string/backspace"
+                />
+
+            <Button
+                android:id="@+id/backward_button"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_column="3"
+                android:text="@string/back"
+                />
+
+            <Button
+                android:id="@+id/forward_button"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_column="4"
+                android:text="@string/forward"
+                />
+
+            <Button
+                android:id="@+id/enter_button"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_column="5"
+                android:text="@string/enter"
+                />
+
+            <Button
                 android:id="@+id/breakpoint_button"
+                style="?android:attr/buttonStyleSmall"
                 android:layout_column="6"
+                android:text="@string/breakpoint"
                 />
 
         </TableRow>
