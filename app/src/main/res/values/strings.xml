@@ -58,14 +58,14 @@
     <string name="label_restart">Restart</string>
 
     <string name="error_no_program_name">Enter a name for the program</string>
-    <string name="error_invalid_input">Invalid input array</string>
+    <string name="error_invalid_input_array">Invalid input array</string>
     <string name="error_min_memory_size">Memory size must be at least 1</string>
     <string name="error_max_memory_size">Memory size must be less than 100000</string>
     <string name="error_max_min">Max value must be larger than min</string>
     <string name="error_min_max">Min value must be smaller than max</string>
     <string name="error_loop_counts">The number of loop openings must be equal to the number of loop closings</string>
     <string name="error_loop_mismatch">Mismatched loops</string>
-    <string name="error_input_a_character">Input a character</string>
+    <string name="error_input_a_character">Input a character or integer</string>
     <string name="error_pointer_overflow">Pointer overflow</string>
     <string name="error_pointer_underflow">Pointer underflow</string>
     <string name="error_value_overflow">Value overflow</string>

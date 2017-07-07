@@ -127,11 +127,25 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
 
         input_button.setOnClickListener {
             val input = input_edittext.text.toString()
+            var valid = false
+
             if (input.isNotEmpty()) {
+                if (input.length == 1) {
+                    outputMessage(input.first().toString())
+                    interpreter.input(input.first())
+                    valid = true
+                } else {
+                    try {
+                        val intValue = input.toInt()
+                        outputMessage(input)
+                        interpreter.input(intValue.toChar())
+                        valid = true
+                    } catch (nfe: NumberFormatException) { }
+                }
+            }
+
+            if (valid) {
                 input_edittext.error = null
-                val inChar = input.first()
-                output.append(inChar + "\n")
-                interpreter.input(inChar)
                 input_edittext.text = null
                 input_layout.visibility = View.GONE
             } else {

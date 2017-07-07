@@ -36,7 +36,6 @@
             android:layout_weight="1"
             android:imeOptions="flagNoExtractUi"
             android:inputType="text"
-            android:maxLength="1"
             android:hint="@string/hint_program_input"/>
 
         <Button

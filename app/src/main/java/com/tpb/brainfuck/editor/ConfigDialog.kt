@@ -132,7 +132,7 @@ class ConfigDialog : DialogFragment() {
                         }})
                 } catch (e: Exception) {
                     error = true
-                    view.findViewById<TextInputLayout>(R.id.input_stream_wrapper).error = getString(R.string.error_invalid_input)
+                    view.findViewById<TextInputLayout>(R.id.input_stream_wrapper).error = getString(R.string.error_invalid_input_array)
                 }
             }
 

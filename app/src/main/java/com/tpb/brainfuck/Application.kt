@@ -154,8 +154,6 @@ class Application : Application() {
                         source = "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.",
                         memoryCapacity = 8
                 ))
-
-
     }
 
     override fun onCreate() {
