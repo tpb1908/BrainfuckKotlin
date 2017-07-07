@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
+import android.text.style.ForegroundColorSpan
 import android.view.KeyEvent
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
@@ -27,6 +28,8 @@ class Editor : AppCompatActivity(), ConfigDialog.ConfigDialogListener {
     var hasProgramChanged: Boolean = false
     lateinit var program: Program
     lateinit var dao: ProgramDao
+    var startBrace: ForegroundColorSpan? = null
+    var endBrace: ForegroundColorSpan? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(Application.themeId)
@@ -65,6 +68,12 @@ class Editor : AppCompatActivity(), ConfigDialog.ConfigDialogListener {
 
         editor.addSimpleTextChangedListener {
             hasProgramChanged.or(editor.text.toString() != program.source)
+        }
+
+        editor.selectionChangeListener = object: CursorWatchingEditText.SelectionChangeListener {
+            override fun onSelectionChanged(start: Int, end: Int) {
+                if (start == end && start < editor.text.length) { matchBraces(start) }
+            }
         }
 
         lock_keyboard_button.setOnClickListener { v ->
@@ -128,6 +137,52 @@ class Editor : AppCompatActivity(), ConfigDialog.ConfigDialogListener {
         editor.dispatchKeyEvent(KeyEvent(0, 0, KeyEvent.ACTION_DOWN, keyCode, 0))
         editor.dispatchKeyEvent(KeyEvent(0, 0, KeyEvent.ACTION_UP, keyCode, 0))
     }
+
+    private fun matchBraces(start: Int) {
+        editor.text.removeSpan(startBrace)
+        editor.text.removeSpan(endBrace)
+        startBrace = ForegroundColorSpan(resources.getColor(R.color.colorAccent))
+        endBrace = ForegroundColorSpan(resources.getColor(R.color.colorAccent))
+        if (editor.text[start] == '[' || editor.text[start] == ']') {
+            editor.text.setSpan(startBrace, start, start + 1, 0)
+            highlightMatchingBrace(start)
+        } else if (editor.text[maxOf(start - 1, 0)] == '[' || editor.text[maxOf(start - 1, 0)] == ']') {
+            editor.text.setSpan(startBrace, maxOf(start - 1, 0), start, 0)
+            highlightMatchingBrace(maxOf(start - 1, 0))
+        }
+    }
+
+    private fun highlightMatchingBrace(pos: Int) {
+        var level = 0
+        val selected = editor.text[pos]
+
+        if (selected == '[') {
+            for (i in pos until editor.text.length) {
+                if (editor.text[i] == '[') {
+                    level++
+                } else if (editor.text[i] == ']') {
+                    level--
+                }
+                if (level == 0) {
+                    editor.text.setSpan(endBrace, i, i + 1, 0)
+                    return
+                }
+            }
+        } else {
+            for (i in pos downTo 0) {
+                if (editor.text[i] == '[') {
+                    level++
+                } else if (editor.text[i] == ']') {
+                    level--
+                }
+                if (level == 0) {
+                    editor.text.setSpan(endBrace, i, i + 1, 0)
+                    return
+                }
+            }
+        }
+    }
+
 
     override fun onPositiveClick(dialog: DialogFragment, launchType: ConfigDialog.ConfigDialogType, program: Program) {
         this.program = program
