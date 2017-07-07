@@ -131,13 +131,13 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
 
             if (input.isNotEmpty()) {
                 if (input.length == 1) {
-                    outputMessage(input.first().toString())
+                    output.append("${input.first()}\n")
                     interpreter.input(input.first())
                     valid = true
                 } else {
                     try {
                         val intValue = input.toInt()
-                        outputMessage(input)
+                        output.append("$input\n")
                         interpreter.input(intValue.toChar())
                         valid = true
                     } catch (nfe: NumberFormatException) { }
