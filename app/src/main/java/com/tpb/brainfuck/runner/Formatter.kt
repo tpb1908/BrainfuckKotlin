@@ -10,10 +10,10 @@ class Formatter {
         fun format(source: String, indent: Int = 2): String {
             val formatted = StringBuilder()
             var indentLevel = 0
-            var previousChar: Char = 0.toChar()
-            source.forEach {
-                if (it == '[') {
-                    if (previousChar != it) { //We don't want empty lines between sequential [
+            var prevChar: Char = 0.toChar()
+            source.forEachIndexed { i, c ->
+                if (c == '[') {
+                    if (prevChar != c) { //We don't want empty lines between sequential [
                         formatted.append('\n')
                         repeat(indentLevel * indent, { formatted.append(' ')})
                     }
@@ -21,20 +21,19 @@ class Formatter {
                     formatted.append("[\n")
                     indentLevel++
                     repeat(indentLevel * indent, { formatted.append(' ')})
-                } else if (it == ']') {
+                } else if (c == ']') {
                     indentLevel--
-                    if (previousChar != it) { //We don't want empty lines between sequential ]
+                    if (prevChar != c && source[minOf(i + 1, source.length - 1)] != '\n') { //We don't want empty lines between sequential ]
                         formatted.append('\n')
                         repeat((indentLevel) * indent, { formatted.append(' ')})
                     }
                     formatted.append("]\n")
                     repeat((indentLevel-1) * indent, { formatted.append(' ')})
                 }  else {
-                    formatted.append(it)
-                    if (it == '\n' ) { repeat(indentLevel * indent, { formatted.append(' ')}) }
+                    formatted.append(c)
+                    if (c == '\n' ) { repeat(indentLevel * indent, { formatted.append(' ')}) }
                 }
-                previousChar = it
-
+                prevChar = c
             }
             return formatted.toString()
         }

@@ -69,6 +69,7 @@
     </android.support.v7.widget.Toolbar>
 
 
+
     <com.tpb.brainfuck.editor.CursorWatchingEditText
         android:id="@+id/editor"
         android:layout_width="match_parent"
@@ -81,6 +82,7 @@
         android:imeOptions="flagNoExtractUi"
         android:inputType="textMultiLine"
         android:maxHeight="400dp"/>
+
 
 
     <TableLayout

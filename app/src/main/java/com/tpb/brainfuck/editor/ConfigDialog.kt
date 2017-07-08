@@ -114,7 +114,7 @@ class ConfigDialog : DialogFragment() {
 
         view.findViewById<Button>(R.id.button_ok).setOnClickListener {
             var error = false
-            if (view.findViewById<TextView>(R.id.name_input).text.isEmpty()) {
+            if (view.findViewById<TextView>(R.id.name_input).text.isBlank()) {
                 error = true
                 view.findViewById<TextInputLayout>(R.id.name_wrapper).error = getString(R.string.error_no_program_name)
             } else {

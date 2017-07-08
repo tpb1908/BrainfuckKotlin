@@ -43,7 +43,6 @@ class Editor : AppCompatActivity(), ConfigDialog.ConfigDialogListener {
         val id = intent?.extras?.getLong(getString(R.string.parcel_program), -1) ?: -1
         if (id != -1L) {
             thread {
-                //Looper.prepare()
                 program = dao.getProgram(id)
                 editor.setText(program.source)
                 title = String.format(getString(R.string.title_editing), program.name)
