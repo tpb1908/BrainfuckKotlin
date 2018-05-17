@@ -21,10 +21,10 @@ class ConfigDialog : DialogFragment() {
     private var listener: ConfigDialogListener? = null
     private var type: ConfigDialogType = ConfigDialogType.SAVE
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "InflateParams")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(activity)
-        val view = activity.layoutInflater.inflate(R.layout.dialog_config, null)
+        val builder = AlertDialog.Builder(activity!!)
+        val view = activity!!.layoutInflater.inflate(R.layout.dialog_config, null)
         builder.setView(view)
         type = arguments?.getSerializable(getString(R.string.extra_config_type)) as? ConfigDialogType ?: type
         if (type == ConfigDialogType.RUN) {

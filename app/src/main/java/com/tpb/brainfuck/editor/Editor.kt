@@ -24,12 +24,12 @@ import kotlin.concurrent.thread
  */
 class Editor : AppCompatActivity(), ConfigDialog.ConfigDialogListener {
 
-    var isKeyBoardLocked: Boolean = false
-    var hasProgramChanged: Boolean = false
+    private var isKeyBoardLocked: Boolean = false
+    private var hasProgramChanged: Boolean = false
     lateinit var program: Program
-    lateinit var dao: ProgramDao
-    var startBrace: ForegroundColorSpan? = null
-    var endBrace: ForegroundColorSpan? = null
+    private lateinit var dao: ProgramDao
+    private var startBrace: ForegroundColorSpan? = null
+    private var endBrace: ForegroundColorSpan? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(Application.themeId)

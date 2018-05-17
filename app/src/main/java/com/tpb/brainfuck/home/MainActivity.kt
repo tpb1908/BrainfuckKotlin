@@ -8,6 +8,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.tpb.brainfuck.*
+import com.tpb.brainfuck.R.id.fab
+import com.tpb.brainfuck.R.id.program_recycler
 import com.tpb.brainfuck.db.Program
 import com.tpb.brainfuck.editor.Editor
 import com.tpb.brainfuck.runner.Runner
@@ -45,13 +47,13 @@ class MainActivity : AppCompatActivity(), ProgramAdapter.ProgramTouchHandler {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item?.itemId == R.id.menu_item_switch_theme) {
-            Application.toggleTheme(this)
-            recreate()
-        } else if (item?.itemId == android.R.id.home) {
-            onBackPressed()
-        } else if(item?.itemId == R.id.menu_item_restore_defaults) {
-            Application.restoreDefaultValues()
+        when {
+            item?.itemId == R.id.menu_item_switch_theme -> {
+                Application.toggleTheme(this)
+                recreate()
+            }
+            item?.itemId == android.R.id.home -> onBackPressed()
+            item?.itemId == R.id.menu_item_restore_defaults -> Application.restoreDefaultValues()
         }
 
         return super.onOptionsItemSelected(item)

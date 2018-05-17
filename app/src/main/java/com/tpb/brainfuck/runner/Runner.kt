@@ -89,12 +89,10 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
 
     private fun setup() {
         play_pause_button.setOnClickListener {
-            if (thread.isAlive) {
-                togglePause()
-            } else if (interpreter.complete) {
-                restart_button.callOnClick()
-            } else {
-                startProgram()
+            when {
+                thread.isAlive -> togglePause()
+                interpreter.complete -> restart_button.callOnClick()
+                else -> startProgram()
             }
         }
 
@@ -153,7 +151,7 @@ class Runner : AppCompatActivity(), Interpreter.InterpreterIO {
             }
         }
 
-        if (intent?.extras?.getBoolean(getString(R.string.extra_start_immediately), false) ?: false) {
+        if (intent?.extras?.getBoolean(getString(R.string.extra_start_immediately), false) == true) {
             Handler().postDelayed({ startProgram() }, 60)
         }
 

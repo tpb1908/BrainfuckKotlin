@@ -29,7 +29,7 @@ class Application : Application() {
             }
         }
 
-        fun enableDarkTheme(context: Context) {
+        private fun enableDarkTheme(context: Context) {
             themeId = R.style.AppTheme_Dark
             context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
                     .edit()
@@ -37,7 +37,7 @@ class Application : Application() {
                     .apply()
         }
 
-        fun enableLightTheme(context: Context) {
+        private fun enableLightTheme(context: Context) {
             themeId = R.style.AppTheme
             context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
                     .edit()
@@ -145,7 +145,7 @@ class Application : Application() {
                                 "    <.[-]                    \n" +
                                 "    <-,+                     \n" +
                                 "]",
-                        minVal = -1E6.toInt(),
+                        minVal = (-1E6).toInt(),
                         outSuffix = "\n"
                 ),
                 Program(

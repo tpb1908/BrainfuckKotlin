@@ -1,16 +1,17 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "io.mironov.smuggler"
 apply plugin: 'de.mobilej.unmock'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.tpb.brainfuck"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 2
         versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -25,7 +26,7 @@ android {
 
 configurations.all {
     resolutionStrategy {
-        force 'org.jetbrains.kotlin:kotlin-stdlib:1.1.3' //Ensure stdlib same in mockito-kotlin
+        force 'org.jetbrains.kotlin:kotlin-stdlib:1.2.41' //Ensure stdlib same in mockito-kotlin
     }
 }
 
@@ -40,29 +41,27 @@ unMock {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:26.0.0-beta1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.1'
-    compile 'com.android.support:design:26.0.0-beta1'
-    compile 'com.android.support:cardview-v7:26.0.0-beta1'
-
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api 'com.android.support:appcompat-v7:27.1.1'
+    api 'com.android.support.constraint:constraint-layout:1.1.0'
+    api 'com.android.support:design:27.1.1'
+    api 'com.android.support:cardview-v7:27.1.1'
     // Room
-    compile "android.arch.persistence.room:runtime:1.0.0-alpha3"
-    compile "android.arch.persistence.room:rxjava2:1.0.0-alpha3"
-    annotationProcessor "android.arch.persistence.room:compiler:1.0.0-alpha3"
-    kapt "android.arch.persistence.room:compiler:1.0.0-alpha3"
+    api 'android.arch.persistence.room:runtime:1.1.0'
+    api 'android.arch.persistence.room:rxjava2:1.1.0'
+    annotationProcessor "android.arch.persistence.room:compiler:1.1.0"
+    kapt "android.arch.persistence.room:compiler:1.1.0"
     // RXJava
-    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxkotlin:2.1.0'
-
-    testCompile 'junit:junit:4.12'
-    testCompile 'com.nhaarman:mockito-kotlin-kt1.1:1.5.0'
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    api 'io.reactivex.rxjava2:rxjava:2.1.7'
+    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    api 'io.reactivex.rxjava2:rxkotlin:2.2.0'
+    androidTestApi 'junit:junit:4.12'
+    androidTestApi 'com.nhaarman:mockito-kotlin-kt1.1:1.5.0'
+    androidTestApi('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2', {
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    androidTestApi 'com.android.support.test.espresso:espresso-contrib:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.android.support', module: 'support-v4'
         exclude group: 'com.android.support', module: 'design'

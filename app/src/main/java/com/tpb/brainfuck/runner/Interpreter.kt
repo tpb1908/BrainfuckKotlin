@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue
 /**
  * Created by theo on 02/07/17.
  */
-class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
+class Interpreter(private val io: InterpreterIO, val program: Program) : Runnable {
 
     constructor(io: InterpreterIO, program: Program, useBreakPoints: Boolean) : this(io, program) {
         shouldUseBreakpoints = useBreakPoints
@@ -191,13 +191,13 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
                 io.output(mem[pointer].toChar().toString())
             }
             ',' -> {
-                if (inQueue.isNotEmpty()) {
-                    mem[pointer] = inQueue.take()
-                } else if (program.emptyInputBehaviour == EmptyInputBehaviour.KEYBOARD){
-                    waitingForInput = true
-                    io.getInput()
-                } else {
-                    mem[pointer] = 0
+                when {
+                    inQueue.isNotEmpty() -> mem[pointer] = inQueue.take()
+                    program.emptyInputBehaviour == EmptyInputBehaviour.KEYBOARD -> {
+                        waitingForInput = true
+                        io.getInput()
+                    }
+                    else -> mem[pointer] = 0
                 }
             }
             '[' -> {
@@ -231,7 +231,7 @@ class Interpreter(val io: InterpreterIO, val program: Program) : Runnable {
                 } else {
                     b.append(lastDiffPos).append("..").append(i)
                 }
-                b.append(" = ").append(value).append(", ")
+                b.append(" = ").append(value).append("\n")
                 lastDiffPos = i + 1
             }
             last = value
